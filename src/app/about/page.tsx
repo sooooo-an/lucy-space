@@ -1,11 +1,16 @@
+import { getBlocksFromPage } from "@/services/notion";
 import React from "react";
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const blocks = await getBlocksFromPage(
+    process.env.NEXT_PUBLIC_NOTION_ABOUT_PAGE_ID || ""
+  );
+  // console.log(blocks, "@@@");
+
   return (
-    <main>
-      <iframe src="https://www.notioniframe.com/notion/jbaxocn7hw"></iframe>
-    </main>
+    <div
+      className="flex container flex-col"
+      dangerouslySetInnerHTML={{ __html: blocks?.join("") || "" }}
+    ></div>
   );
 }
-
-// 111a7c38-fabd-8051-87f2-f21159b234a9
