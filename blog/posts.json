@@ -1,11 +1,83 @@
 [
   {
+    "title": "best-react-practices",
+    "description": "React is a JavaScript library for building user interfaces.   A Simple Component  React components i...",
+    "date": "2024-10-22T03:52:58.080Z",
+    "category": "Frontend",
+    "path": "best-react-practices",
+    "thumbnail": "best-react-practices.png"
+  },
+  {
+    "title": "javascript-10-tips",
+    "description": "What you should already know  This guide assumes you have the following basic background:  A general...",
+    "date": "2024-10-22T03:52:58.080Z",
+    "category": "Frontend",
+    "path": "javascript-10-tips",
+    "thumbnail": "javascript-10-tips.png"
+  },
+  {
+    "title": "javascript-basic",
+    "description": "What's JavaScript?  JavaScript (JS) is a lightweight, interpreted, or justintime compiled programmin...",
+    "date": "2024-10-22T03:52:58.081Z",
+    "category": "Frontend",
+    "path": "javascript-basic",
+    "thumbnail": "javascript-basic.png"
+  },
+  {
+    "title": "node-basic",
+    "description": "about Node.js®  As an asynchronous eventdriven JavaScript runtime, Node.js is designed to build scal...",
+    "date": "2024-10-22T03:52:58.081Z",
+    "category": "Frontend",
+    "path": "node-basic",
+    "thumbnail": "node-basic.png"
+  },
+  {
+    "title": "node-pro-tips",
+    "description": "about Node.js®  As an asynchronous eventdriven JavaScript runtime, Node.js is designed to build scal...",
+    "date": "2024-10-22T03:52:58.082Z",
+    "category": "Frontend",
+    "path": "node-pro-tips",
+    "thumbnail": "node-pro-tips.png"
+  },
+  {
+    "title": "react18-walkthrough",
+    "description": "What is Concurrent React?  > The most important addition in React 18 is something we hope you never ...",
+    "date": "2024-10-22T03:52:58.082Z",
+    "category": "Frontend",
+    "path": "react18-walkthrough",
+    "thumbnail": "react18-walkthrough.png"
+  },
+  {
+    "title": "review-2021",
+    "description": "2021 Year Review!   Employee’s basic information. For identification and analysis purposes, it is al...",
+    "date": "2024-10-22T03:52:58.082Z",
+    "category": "Frontend",
+    "path": "review-2021",
+    "thumbnail": "review-2021.png"
+  },
+  {
+    "title": "review-2022",
+    "description": "2022 Year Review!   Employee’s basic information. For identification and analysis purposes, it is al...",
+    "date": "2024-10-22T03:52:58.082Z",
+    "category": "Frontend",
+    "path": "review-2022",
+    "thumbnail": "review-2022.png"
+  },
+  {
+    "title": "2023 리뷰",
+    "description": "2023 Year Review!   Employee’s basic information. For identification and analysis purposes, it is al...",
+    "date": "2024-10-22T03:52:58.082Z",
+    "category": "Frontend",
+    "path": "review-2023",
+    "thumbnail": "review-2023.png"
+  },
+  {
     "title": "타입스크립트 단언식",
     "description": "React is a JavaScript library for building user interfaces.   A Simple Component  React components i...",
-    "date": "2024-10-11",
+    "date": "2024-10-11T00:00:00.000Z",
     "category": "TypeScript",
     "path": "typescript-refactoring",
-    "thumbnail": "",
+    "thumbnail": "typescript-refactoring.png",
     "thumbname": "typescript-refactoring"
   }
 ]

@@ -4,6 +4,7 @@ import path from "path";
 const FRONT_MATTER_REGEX = /^---\n([\s\S]+?)\n---/;
 const NEW_LINE_REGEX = /\n/g;
 const SPECIAL_CHARACTERS_REGEX = /[*#\-`]/g;
+const DEFAULT_CATEGORY = "Frontend";
 
 const extractFrontMatter = (content, fileName) => {
   const match = content.match(FRONT_MATTER_REGEX);
@@ -18,16 +19,24 @@ const extractFrontMatter = (content, fileName) => {
   const initialValue = {
     title: fileName,
     description,
-    date: "" || new Date().toISOString(),
-    category: "",
+    date: new Date().toISOString(),
+    category: DEFAULT_CATEGORY,
     path: fileName,
-    thumbnail: "",
+    thumbnail: `${fileName}.png`,
   };
 
   if (match && match[1]) {
     return match[1].split("\n").reduce((acc, line) => {
       const [key, value] = line.split(":").map((str) => str.trim());
-      return { ...acc, ...(key && value ? { [key]: value } : {}) };
+      if (key && value) {
+        return {
+          ...acc,
+          ...(key === "date"
+            ? { [key]: new Date(value).toISOString() }
+            : { [key]: value }),
+        };
+      }
+      return acc;
     }, initialValue);
   }
   return initialValue;
@@ -44,7 +53,7 @@ const processMarkdownFiles = (markdownFiles, jsonOutputPath) => {
 
   for (const filePath of markdownFiles) {
     const content = readFileSync(filePath, "utf-8");
-    const fileName = path.basename(filePath);
+    const fileName = path.basename(filePath).replace(".md", "");
     const frontMatter = extractFrontMatter(content, fileName);
     if (frontMatter) {
       results.push(frontMatter);
