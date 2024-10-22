@@ -7,7 +7,7 @@ export default async function PostsPage() {
   const categories = [...new Set(posts.map((post) => post.category))];
 
   return (
-    <div className="flex flex-col container">
+    <div className="flex flex-col max-w-full lg:max-w-[900px]">
       <FilterablePost posts={posts} categories={categories} />
     </div>
   );

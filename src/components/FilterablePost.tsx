@@ -20,7 +20,7 @@ export default function FilterablePost({ posts, categories }: Props) {
       : posts.filter((post) => post.category === selected);
 
   return (
-    <section className="w-full">
+    <section className="w-full px-4 ">
       <Categories
         onClick={setSelected}
         categories={[ALL_POSTS, ...categories]}
