@@ -22,7 +22,9 @@ export default function RootLayout({
     <html lang="en" className={`${openSans.className} antialiased`}>
       <body>
         <Header />
-        <main className="flex items-center justify-center">{children}</main>
+        <main className="flex items-center justify-center flex-1">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>
