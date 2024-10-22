@@ -14,7 +14,7 @@ export default async function PostPage({ params: { path } }: Props) {
   const { thumbnail, title } = post;
 
   return (
-    <article className="container">
+    <article className="container px-2">
       <Image
         className="rounded-lg w-full h-1/5 max-h-[500px]"
         src={`/images/posts/${thumbnail}`}
