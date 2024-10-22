@@ -7,4 +7,6 @@ export type Post = {
   thumbnail: string;
 };
 
-export type PostFromMarkdown = Partial<Post>;
+export type PostData = Post & {
+  content: string;
+};

@@ -12,7 +12,7 @@ export default function PostCard({ post }: Props) {
 
   return (
     <Link href={`/posts/${path}`}>
-      <article className="border-b py-6 mb-4 items-center relative sm:flex gap-4">
+      <article className="border-t py-6 mb-4 items-center relative sm:flex gap-4">
         <Image
           className="rounded-lg w-full sm:w-[200px] md:w-[250px]"
           src={`/images/posts/${thumbnail}`}
