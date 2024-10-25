@@ -2,46 +2,58 @@
 
 import React from "react";
 import Link from "next/link";
-import { RiAlarmWarningLine } from "react-icons/ri";
-import { RiArchiveLine } from "react-icons/ri";
-import { RiLoginBoxLine } from "react-icons/ri";
+import {
+  RiNotification3Fill,
+  RiHome6Fill,
+  RiArchiveFill,
+  RiLoginBoxFill,
+} from "react-icons/ri";
 import { usePathname } from "next/navigation";
+import UserProfile from "./UserProfile";
 
 const PROJECT_MENUS = [
   {
+    name: "Home",
+    href: "/",
+    icon: <RiHome6Fill />,
+  },
+  {
     name: "Developers & Store",
-    href: "developers-store",
-    icon: <RiLoginBoxLine />,
+    href: "/projects/developers-store",
+    icon: <RiLoginBoxFill />,
   },
   {
     name: "Notification",
-    href: "notification",
-    icon: <RiAlarmWarningLine />,
+    href: "/projects/notification",
+    icon: <RiNotification3Fill />,
   },
   {
     name: "Subtask",
-    href: "subtask",
-    icon: <RiArchiveLine />,
+    href: "/projects/subtask",
+    icon: <RiArchiveFill />,
   },
 ];
+const ACTIVE_CLASSNAME = "bg-gray-200 text-gray-900 font-bold";
+const INACTIVE_CLASSNAME = "text-gray-400 font-semibold";
 
 export default function ProjectLeftShelf() {
   const pathname = usePathname();
 
   return (
     <>
-      <h2 className="text-white text-xs pb-6">Projects</h2>
-      <ul className=" text-white">
+      <UserProfile />
+      <ul>
         {PROJECT_MENUS.map(({ href, icon, name }) => (
           <li key={href} className="mb-1">
             <Link
-              className={`flex items-center gap-x-4 py-3 px-2 rounded-lg hover:bg-slate-500 ${
-                pathname === `/projects/${href}` ? "bg-slate-500" : ""
+              title={`Go to ${name}`}
+              className={`flex items-center gap-x-2 py-3 px-2 rounded-md hover:bg-gray-200 hover:text-gray-900 ${
+                pathname === href ? ACTIVE_CLASSNAME : INACTIVE_CLASSNAME
               }`}
-              href={`/projects/${href}`}
+              href={href}
             >
               {icon}
-              <span className="text-xs">{name}</span>
+              <span className="text-sm">{name}</span>
             </Link>
           </li>
         ))}
