@@ -12,7 +12,7 @@ export default function ProjectLayout({
       <section className="basis-1/6 min-w-[240px] bg-white p-2 border-r">
         <ProjectLeftShelf />
       </section>
-      <section className="w-full bg-slate-50">
+      <section className="w-full bg-slate-50 flex flex-col">
         <ProjectContent>{children}</ProjectContent>
       </section>
     </section>
