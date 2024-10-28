@@ -16,11 +16,11 @@ export default async function PostPage({ params: { path } }: Props) {
   return (
     <article className="container px-2">
       <Image
-        className="rounded-lg w-full h-1/5 max-h-[500px]"
+        className="rounded-lg w-full h-2/5 max-h-[600px]"
         src={`/images/posts/${thumbnail}`}
         alt={title}
-        width={800}
-        height={400}
+        width={960}
+        height={540}
       />
       <PostContent post={post} />
     </article>

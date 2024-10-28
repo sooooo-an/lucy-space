@@ -2,7 +2,7 @@ import { writeFileSync, readFileSync, readdirSync } from "fs";
 import path from "path";
 
 const FRONT_MATTER_REGEX = /^---\n([\s\S]+?)\n---/;
-const NEW_LINE_REGEX = /\n/g;
+const NEW_LINE_REGEX = /\n|\\/g;
 const SPECIAL_CHARACTERS_REGEX = /[*#\-`]/g;
 const DEFAULT_CATEGORY = "Frontend";
 
