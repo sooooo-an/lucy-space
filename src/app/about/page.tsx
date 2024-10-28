@@ -5,7 +5,6 @@ export default async function AboutPage() {
   const blocks = await getBlocksFromPage(
     process.env.NEXT_PUBLIC_NOTION_ABOUT_PAGE_ID || ""
   );
-  // console.log(blocks, "@@@");
 
   return (
     <div
