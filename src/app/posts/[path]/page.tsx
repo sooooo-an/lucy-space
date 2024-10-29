@@ -1,4 +1,4 @@
-import PostContent from "@/components/PostContent";
+import PostContent from "@/components/posts/PostContent";
 import { getPostData } from "@/services/blog";
 import Image from "next/image";
 import React from "react";

@@ -1,4 +1,4 @@
-import FilterablePost from "@/components/FilterablePost";
+import FilterablePost from "@/components/posts/FilterablePost";
 import { getAllPosts } from "@/services/blog";
 import React from "react";
 

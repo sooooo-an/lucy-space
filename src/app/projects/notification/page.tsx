@@ -1,4 +1,4 @@
-import ProjectOverview from "@/components/ProjectOverview";
+import ProjectOverview from "@/components/projects/ProjectOverview";
 import React from "react";
 
 export default function NotificationPage() {

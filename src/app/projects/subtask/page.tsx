@@ -1,5 +1,5 @@
-import KanbanBoard from "@/components/KanbanBoard";
-import ProjectOverview from "@/components/ProjectOverview";
+import KanbanBoard from "@/components/subtask/KanbanBoard";
+import ProjectOverview from "@/components/projects/ProjectOverview";
 import React from "react";
 
 export default function SubtaskPage() {
