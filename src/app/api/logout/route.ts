@@ -11,4 +11,5 @@ export async function POST() {
       path: "/",
     })
   );
+  return response;
 }
