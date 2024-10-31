@@ -1,4 +1,4 @@
-import { parseDate } from "@/app/utils/date";
+import { parseDate } from "@/utils/date";
 import { Post } from "@/types/post";
 import Image from "next/image";
 import Link from "next/link";
