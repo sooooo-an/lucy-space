@@ -9,10 +9,13 @@ type Props = {
   content: string;
 };
 
+const MARKDOWN_STYLE =
+  "prose-h2:underline prose-a:text-purple-500 prose-pre:p-2 prose-pre:m-2 prose-h4:text-purple-700";
+
 export default function MarkdownViewer({ content }: Props) {
   return (
     <Markdown
-      className="prose lg:prose-xl max-w-none"
+      className={`prose lg:prose-xl max-w-none ${MARKDOWN_STYLE}`}
       rehypePlugins={[remarkGfm]}
       components={{
         code(props) {

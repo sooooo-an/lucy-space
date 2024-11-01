@@ -13,3 +13,15 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+.prose code:not(pre code) {
+  @apply bg-gray-100 text-gray-600;
+  @apply font-sans;
+  padding: 0.1em 0.3em;
+  border-radius: 0.3em;
+}
+
+.prose code:not(pre code)::before,
+.prose code:not(pre code)::after {
+  content: none;
+}
