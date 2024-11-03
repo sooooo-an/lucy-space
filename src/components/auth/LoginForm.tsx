@@ -5,6 +5,7 @@ import usePreview from "@/hooks/usePreview";
 import Avatar from "../ui/Avatar";
 import { uploadImage } from "@/services/upload";
 import { useAuth } from "@/contexts/AuthContext";
+import { httpClient } from "@/utils/httpClient";
 
 type Props = {
   showSignup: boolean;
@@ -58,14 +59,11 @@ export default function LoginForm({ showSignup, toggleView }: Props) {
         password: values.password,
         thumbnail: preview,
       };
-      fetch("/api/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      })
-        .then((res) => res.json())
+
+      httpClient
+        .post("/api/signup", {
+          body,
+        })
         .then(console.log);
     } else {
       login(values.name, values.password);

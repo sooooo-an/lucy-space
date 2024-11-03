@@ -3,6 +3,7 @@
 import { UserData } from "@/types/user";
 import React, { useState, useContext, useEffect } from "react";
 import { getCookie } from "cookies-next";
+import { httpClient } from "@/utils/httpClient";
 
 type Props = {
   children: React.ReactNode;
@@ -26,35 +27,25 @@ export function AuthProvider({ children }: Props) {
   useEffect(() => {
     const uuid = getCookie("uuid");
     if (uuid) {
-      fetch(`/api/user/${uuid}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => setUser(data.user));
+      httpClient
+        .get<{ user: UserData }>(`/api/user/${uuid}`)
+        .then(({ data }) => {
+          setUser(data.user);
+        });
     }
   }, []);
 
   const login = async (name: string, password: string) => {
-    return fetch("/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name, password }),
-    })
-      .then((res) => res.json())
-      .then((data) => setUser(data.user));
+    return httpClient
+      .post<{ user: UserData }>("/api/login", {
+        body: { name, password },
+      })
+      .then(({ data }) => setUser(data.user))
+      .catch((error) => console.error(error));
   };
 
   const logout = async () => {
-    return fetch("/api/logout", {
-      method: "POST",
-    })
-      .then((res) => res.json())
-      .then(() => setUser(null));
+    return httpClient.post("/api/logout").then(() => setUser(null));
   };
 
   return (
