@@ -1,5 +1,5 @@
 import { getUser } from "@/services/users";
-import { type ResponseError } from "@/utils/ResponseError";
+import { ResponseError } from "@/utils/ResponseError";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { serialize } from "cookie";
@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
 
     if (!body) {
-      throw { status: 400, message: "Bad Request" } as ResponseError;
+      throw new ResponseError({ status: 400, message: "Bad Request" });
     }
 
     const user = await getUser(body);
@@ -29,16 +29,15 @@ export async function POST(req: NextRequest) {
         thumbnail: user.thumbnail,
       },
     });
-    response.headers.set(
+    response.headers.append(
       "Set-Cookie",
       serialize("authToken", token, {
-        // httpOnly: true,
         maxAge: 60 * 60 * 24 * 30,
         path: "/",
         sameSite: "strict",
       })
     );
-    response.headers.set(
+    response.headers.append(
       "Set-Cookie",
       serialize("uuid", user.id, {
         maxAge: 60 * 60 * 24 * 30,
@@ -50,7 +49,12 @@ export async function POST(req: NextRequest) {
     return response;
   } catch (error) {
     console.error("[API ERROR] /login:", error);
-    const responseError = error as ResponseError;
-    return NextResponse.json(responseError);
+    if (error instanceof ResponseError) {
+      return NextResponse.json(error);
+    }
+
+    return NextResponse.json(
+      new ResponseError({ status: 500, message: "Internal Server Error" })
+    );
   }
 }

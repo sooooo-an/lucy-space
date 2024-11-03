@@ -63,6 +63,7 @@ class HttpClient implements HttpClientData {
         data,
       };
     } catch (error) {
+      console.error("[HTTP CLIENT ERROR]:", error);
       if (error instanceof ResponseError) {
         throw error;
       }

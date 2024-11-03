@@ -1,5 +1,5 @@
 import { createUser } from "@/services/users";
-import { type ResponseError } from "@/utils/ResponseError";
+import { ResponseError } from "@/utils/ResponseError";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
 
     if (!body) {
-      throw { status: 400, message: "Bad Request" } as ResponseError;
+      throw new ResponseError({ status: 400, message: "Bad Request" });
     }
 
     const user = await createUser(body);
@@ -22,7 +22,12 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     console.error("[API ERROR] /signup:", error);
-    const responseError = error as ResponseError;
-    return NextResponse.json(responseError);
+    if (error instanceof ResponseError) {
+      return NextResponse.json(error);
+    }
+
+    return NextResponse.json(
+      new ResponseError({ status: 500, message: "Internal Server Error" })
+    );
   }
 }

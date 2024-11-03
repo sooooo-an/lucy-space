@@ -12,7 +12,7 @@ export const getUser = async ({ name, password }: LoginInputData) => {
     });
 
     if (!user) {
-      throw { status: 404, message: "User not found" } as ResponseError;
+      throw new ResponseError({ status: 404, message: "User not found" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -31,7 +31,7 @@ export const getUser = async ({ name, password }: LoginInputData) => {
       throw error;
     }
 
-    throw { status: 500, message: error } as ResponseError;
+    throw new ResponseError({ status: 500, message: JSON.stringify(error) });
   }
 };
 
@@ -44,7 +44,7 @@ export const getUserById = async (id: string) => {
     });
 
     if (!user) {
-      throw { status: 404, message: "User not found" } as ResponseError;
+      throw new ResponseError({ status: 404, message: "User not found" });
     }
 
     return user;
@@ -54,7 +54,7 @@ export const getUserById = async (id: string) => {
       throw error;
     }
 
-    throw { status: 500, message: error } as ResponseError;
+    throw new ResponseError({ status: 500, message: JSON.stringify(error) });
   }
 };
 
@@ -71,7 +71,7 @@ export const createUser = async ({
     });
 
     if (existingUser) {
-      throw { status: 409, message: "User already exists" } as ResponseError;
+      throw new ResponseError({ status: 409, message: "User already exists" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -91,6 +91,6 @@ export const createUser = async ({
       throw error;
     }
 
-    throw { status: 500, message: error } as ResponseError;
+    throw new ResponseError({ status: 500, message: JSON.stringify(error) });
   }
 };

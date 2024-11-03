@@ -1,5 +1,5 @@
 import { getUserById } from "@/services/users";
-import { type ResponseError } from "@/utils/ResponseError";
+import { ResponseError } from "@/utils/ResponseError";
 import { NextRequest, NextResponse } from "next/server";
 
 type Context = {
@@ -23,7 +23,12 @@ export async function GET(_: NextRequest, context: Context) {
     });
   } catch (error) {
     console.error("[API ERROR] /user/[id]:", error);
-    const responseError = error as ResponseError;
-    return NextResponse.json(responseError);
+    if (error instanceof ResponseError) {
+      return NextResponse.json(error);
+    }
+
+    return NextResponse.json(
+      new ResponseError({ status: 500, message: "Internal Server Error" })
+    );
   }
 }
