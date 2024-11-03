@@ -20,7 +20,7 @@ export default function ModalLayout({ children, onClose }: Props) {
     >
       <div className="bg-white w-[450px] max-h-[500px] h-auto relative rounded-md">
         <button
-          className="absolute top-0 right-0 p-5 text-2xl text-gray-400"
+          className="absolute top-0 right-0 p-5 text-2xl text-gray-400 z-10"
           onClick={onClose}
         >
           <CloseIcon />
