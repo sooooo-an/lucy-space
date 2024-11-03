@@ -11,15 +11,11 @@ type Props = {
 
 type AuthContextData = {
   user: UserData | null;
-  login: (name: string, password: string) => void;
+  login: (name: string, password: string) => Promise<void>;
   logout: () => void;
 };
 
-const AuthContext = React.createContext<AuthContextData>({
-  user: null,
-  login: () => {},
-  logout: () => {},
-});
+const AuthContext = React.createContext<AuthContextData | null>(null);
 
 export function AuthProvider({ children }: Props) {
   const [user, setUser] = useState<UserData | null>(null);
@@ -55,4 +51,12 @@ export function AuthProvider({ children }: Props) {
   );
 }
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+
+  return context;
+};
