@@ -38,6 +38,7 @@ model Task {
 model Board {
   id        String   @id @default(cuid())
   title     String
+  status    TaskStatus   @default(BACKLOG)
   tasks     Task[]   @relation("BoardToTasks")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

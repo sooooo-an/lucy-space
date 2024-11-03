@@ -1,13 +1,17 @@
 import React from "react";
 import Kanban from "./Kanban";
+import { BoardData } from "@/types/task";
 
-export default function KanbanBoard() {
+type Props = {
+  boards: BoardData[];
+};
+
+export default function KanbanBoard({ boards }: Props) {
   return (
     <section className="flex flex-1 gap-8 overflow-x-auto p-4">
-      <Kanban title="Backlog Tasks" />
-      <Kanban title="To Do Tasks" />
-      <Kanban title="In Process" />
-      <Kanban title="Done" />
+      {boards?.map((board) => (
+        <Kanban key={board.id} board={board} />
+      ))}
     </section>
   );
 }
