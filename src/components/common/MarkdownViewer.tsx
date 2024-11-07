@@ -43,7 +43,7 @@ export default function MarkdownViewer({ content }: Props) {
             alt={image.alt || ""}
             width={500}
             height={350}
-            className="w-3/6"
+            className="lg:w-2/3 w-full"
           />
         ),
       }}
