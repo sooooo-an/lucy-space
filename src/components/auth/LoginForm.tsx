@@ -1,73 +1,27 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { FormEvent, useState } from "react";
 import AuthInputBox from "./AuthInputBox";
-import { LOGIN_INPUTS, SIGNUP_INPUTS, getInitialState } from "@/types/auth";
-import usePreview from "@/hooks/usePreview";
-import Avatar from "../ui/Avatar";
-import { uploadImage } from "@/services/upload";
+import { LoginInputData } from "@/types/auth";
 import { useAuth } from "@/contexts/AuthContext";
-import { httpClient } from "@/utils/httpClient";
+import useForm from "@/hooks/useForm";
+import { LOGIN_INPUTS } from "@/constants/login-form";
+import Button from "../ui/Button";
+import { ResponseError } from "@/utils/ResponseError";
 
 type Props = {
-  showSignup: boolean;
-  toggleView: () => void;
+  onClose: () => void;
 };
 
-export default function LoginForm({ showSignup, toggleView }: Props) {
-  const inputs = showSignup ? SIGNUP_INPUTS : LOGIN_INPUTS;
-  const INITIAL_STATE = useMemo(() => getInitialState(inputs), [inputs]);
-
-  const [values, setValues] = useState(INITIAL_STATE);
-  const [error, setError] = useState<string | null>(null);
-  const { preview, handlePreview, removePreview } = usePreview();
+export default function LoginForm({ onClose }: Props) {
+  const { values, handleChange } = useForm<LoginInputData>({
+    initialValues: { email: "", password: "" },
+  });
   const { login } = useAuth();
+  const [error, setError] = useState<null | ResponseError>(null);
+  const DISABLED = !values.email || !values.password;
 
-  useEffect(() => {
-    setValues(INITIAL_STATE);
-    removePreview();
-  }, [INITIAL_STATE]);
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, files, type } = e.target;
-    if (name === "passwordConfirm") {
-      if (value !== values.password) {
-        setError("비밀번호가 일치하지 않습니다.");
-      } else {
-        setError("");
-      }
-    }
-
-    if (type === "file") {
-      if (!files?.length) return;
-
-      uploadImage(files[0]).then((url) => {
-        handlePreview(url);
-      });
-    }
-
-    setValues((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
-    if (showSignup) {
-      const body = {
-        name: values.name,
-        password: values.password,
-        thumbnail: preview,
-      };
-
-      httpClient
-        .post("/api/signup", {
-          body,
-        })
-        .then(console.log);
-    } else {
-      login(values.name, values.password);
-    }
+    login(values.email, values.password).then(onClose).catch(setError);
   };
 
   return (
@@ -75,46 +29,30 @@ export default function LoginForm({ showSignup, toggleView }: Props) {
       onSubmit={onSubmit}
       className="flex items-center justify-center flex-col h-full px-4 relative py-12"
     >
-      <h3 className="text-lg font-bold text-gray-700 pb-1">
-        {showSignup ? "테스트용 회원가입" : "테스트용 로그인"}
-      </h3>
+      <h3 className="text-lg font-bold text-gray-700 pb-1">테스트용 로그인</h3>
 
-      {!showSignup && (
-        <p className="text-sm text-center">
-          프로젝트를 테스트하기 위해서는 테스트용 계정이 필요합니다.
-        </p>
-      )}
-
-      {preview && <Avatar image={preview} alt="thumbnail" size="lg" />}
+      <p className="text-sm text-center">
+        프로젝트를 테스트하기 위해서는 테스트용 계정이 필요합니다.
+      </p>
 
       <ul className="w-full pt-4">
-        {inputs.map((input) => (
+        {LOGIN_INPUTS.map((input) => (
           <AuthInputBox
             key={input.id}
             item={input}
-            value={values[input.name] ?? ""}
-            onChange={onChange}
+            value={values[input.name as keyof LoginInputData] ?? ""}
+            onChange={handleChange}
           />
         ))}
       </ul>
 
-      <button
-        type="submit"
-        className="h-12 w-full mt-2 mb-1 bg-yellow-500 text-white font-bold rounded-lg hover:bg-yellow-600"
-      >
-        {showSignup ? "SignUp" : "Login"}
-      </button>
-      {error && (
-        <span className="text-xs text-red-600 font-semibold">{error}</span>
-      )}
+      <Button type="submit" text="Login" color="primary" disabled={DISABLED} />
 
-      <button
-        type="button"
-        onClick={toggleView}
-        className="text-sm text-gray-500 hover:underline absolute bottom-5"
-      >
-        {showSignup ? "이미 계정이 있으신가요?" : "아직 계정이 없으신가요?"}
-      </button>
+      {error && (
+        <span className="text-xs text-red-600 font-semibold">
+          {error.message}
+        </span>
+      )}
     </form>
   );
 }

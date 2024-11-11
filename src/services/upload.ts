@@ -1,4 +1,4 @@
-import { type ResponseError } from "@/utils/ResponseError";
+import { ResponseError } from "@/utils/ResponseError";
 
 const UPLOAD_URL = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`;
 
@@ -13,7 +13,7 @@ export const uploadImage = async (file: File) => {
       body: data,
     }) //
       .then((response) => response.json())
-      .then((data) => data.url);
+      .then((data) => data.secure_url);
   } catch (error) {
     console.error("[UPLOAD ERROR]:", error);
     throw { status: 500, message: error } as ResponseError;

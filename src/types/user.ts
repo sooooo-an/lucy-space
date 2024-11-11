@@ -1,5 +1,3 @@
-export type UserData = {
-  id: string;
-  name: string;
-  thumbnail: string;
-};
+import { User } from "firebase/auth";
+
+export type UserData = User;

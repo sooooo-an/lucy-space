@@ -1,8 +1,8 @@
 import { getApps, initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
-import { getStorage } from "firebase/storage";
+import { Analytics, getAnalytics } from "firebase/analytics";
+import { Firestore, getFirestore } from "firebase/firestore";
+import { Auth, getAuth } from "firebase/auth";
+import { FirebaseStorage, getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -14,12 +14,12 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-let analytics;
-let db;
-let auth;
-let storage;
+let analytics: Analytics;
+let db: Firestore;
+let auth: Auth;
+let storage: FirebaseStorage;
 
-if (!getApps().length) {
+if (typeof window !== "undefined" && !getApps().length) {
   const app = initializeApp(firebaseConfig);
   analytics = getAnalytics(app);
   db = getFirestore(app);

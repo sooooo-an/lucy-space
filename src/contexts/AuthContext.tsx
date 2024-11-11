@@ -2,8 +2,7 @@
 
 import { UserData } from "@/types/user";
 import React, { useState, useContext, useEffect } from "react";
-import { getCookie } from "cookies-next";
-import { httpClient } from "@/utils/httpClient";
+import { handleAuthState, handleLogin, handleLogout } from "@/services/users";
 
 type Props = {
   children: React.ReactNode;
@@ -11,8 +10,9 @@ type Props = {
 
 type AuthContextData = {
   user: UserData | null;
-  login: (name: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<UserData>;
   logout: () => void;
+  updateUser: (user: Partial<UserData>) => void;
 };
 
 const AuthContext = React.createContext<AuthContextData | null>(null);
@@ -21,31 +21,34 @@ export function AuthProvider({ children }: Props) {
   const [user, setUser] = useState<UserData | null>(null);
 
   useEffect(() => {
-    const uuid = getCookie("uuid");
-    if (uuid) {
-      httpClient
-        .get<{ user: UserData }>(`/api/user/${uuid}`)
-        .then(({ data }) => {
-          setUser(data.user);
-        });
-    }
+    const unsubscribe = handleAuthState((user) => {
+      setUser(user);
+    });
+    return () => unsubscribe();
   }, []);
 
-  const login = async (name: string, password: string) => {
-    return httpClient
-      .post<{ user: UserData }>("/api/login", {
-        body: { name, password },
-      })
-      .then(({ data }) => setUser(data.user))
-      .catch((error) => console.error(error));
+  const login = async (email: string, password: string) => {
+    return handleLogin({ email, password }).then((user: UserData) => {
+      return user;
+    });
   };
 
   const logout = async () => {
-    return httpClient.post("/api/logout").then(() => setUser(null));
+    return handleLogout().then(() => setUser(null));
+  };
+
+  const updateUser = async (update: Partial<UserData>) => {
+    setUser((prev) => {
+      if (!prev) {
+        return null;
+      }
+
+      return { ...prev, ...update };
+    });
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );
