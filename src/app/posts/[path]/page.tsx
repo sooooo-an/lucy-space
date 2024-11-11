@@ -1,5 +1,5 @@
 import PostContent from "@/components/posts/PostContent";
-import { getPostData } from "@/services/blog";
+import { getAllPosts, getPostData } from "@/services/blog";
 import { Metadata } from "next";
 import Image from "next/image";
 import React from "react";
@@ -37,4 +37,11 @@ export default async function PostPage({ params: { path } }: Props) {
       <PostContent post={post} />
     </article>
   );
+}
+
+export async function generateStaticParams() {
+  const posts = await getAllPosts();
+  return posts.map((post) => ({
+    slug: post.path,
+  }));
 }
