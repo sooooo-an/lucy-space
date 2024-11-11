@@ -1,5 +1,6 @@
 import PostContent from "@/components/posts/PostContent";
 import { getPostData } from "@/services/blog";
+import { Metadata } from "next";
 import Image from "next/image";
 import React from "react";
 
@@ -8,6 +9,17 @@ type Props = {
     path: string;
   };
 };
+
+export async function generateMetadata({
+  params: { path },
+}: Props): Promise<Metadata> {
+  const { title, description, category: keywords } = await getPostData(path);
+  return {
+    title,
+    description,
+    keywords,
+  };
+}
 
 export default async function PostPage({ params: { path } }: Props) {
   const post = await getPostData(path);
