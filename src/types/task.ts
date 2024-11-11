@@ -7,7 +7,7 @@ export type Task = {
   assigneeId: string;
   subtasks?: string[];
   todos?: number;
-  kanbanId: $Enums.TaskStatus;
+  kanbanId: string;
 };
 
 export const enum TaskStatus {
