@@ -1,5 +1,4 @@
 import prisma from "@/lib/prisma";
-import { BoardData } from "@/types/task";
 import { ResponseError } from "@/utils/ResponseError";
 
 export const getBoards = async () => {
@@ -17,14 +16,12 @@ export const getBoards = async () => {
       },
     });
 
-    const filteredBoards: BoardData[] = boards.map(
-      ({ id, title, status, tasks }) => ({
-        id,
-        title,
-        status,
-        tasks: tasks.map((task) => task.id),
-      })
-    );
+    const filteredBoards = boards.map(({ id, title, status, tasks }) => ({
+      id,
+      title,
+      status,
+      tasks: tasks.map((task) => task.id),
+    }));
 
     return filteredBoards;
   } catch (error) {

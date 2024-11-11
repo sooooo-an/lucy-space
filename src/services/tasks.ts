@@ -1,11 +1,7 @@
-import { db } from "@/lib/firebase";
-import { addDoc, collection } from "firebase/firestore";
+// import { db } from "@/lib/firebase";
+// import { addDoc, collection } from "firebase/firestore";
 
-export const createTask = async (title: string) => {
-  const newTask = await addDoc(collection(db, "tasks"), {
-    title: "",
-  });
-};
+export const createTask = async () => {};
 
 export const updateTask = () => {};
 

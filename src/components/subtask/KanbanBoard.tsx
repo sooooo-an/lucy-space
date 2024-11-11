@@ -1,9 +1,9 @@
 import React from "react";
 import Kanban from "./Kanban";
-import { BoardData } from "@/types/task";
+import { KanbanData } from "@/types/task";
 
 type Props = {
-  boards: BoardData[];
+  boards: KanbanData[];
 };
 
 export default function KanbanBoard({ boards }: Props) {
