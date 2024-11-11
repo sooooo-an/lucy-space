@@ -1,94 +1,92 @@
-import prisma from "@/lib/prisma";
+import { auth } from "@/lib/firebase";
 import { LoginInputData, SignupInputData } from "@/types/auth";
 import { ResponseError } from "@/utils/ResponseError";
-import bcrypt from "bcryptjs";
+import { FirebaseError } from "firebase/app";
+import {
+  NextOrObserver,
+  User,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
 
-export const getUser = async ({ name, password }: LoginInputData) => {
-  try {
-    const user = await prisma.user.findUnique({
-      where: {
-        name,
-      },
-    });
-
-    if (!user) {
-      throw new ResponseError({ status: 404, message: "User not found" });
-    }
-
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-
-    if (!isPasswordValid) {
-      throw {
-        status: 401,
-        message: "Invalid email or password",
-      } as ResponseError;
-    }
-
-    return user;
-  } catch (error) {
-    console.error("[PRISMA ERROR] get user DB:", error);
-    if (error instanceof ResponseError) {
-      throw error;
-    }
-
-    throw new ResponseError({ status: 500, message: JSON.stringify(error) });
-  }
-};
-
-export const getUserById = async (id: string) => {
-  try {
-    const user = await prisma.user.findUnique({
-      where: {
-        id,
-      },
-    });
-
-    if (!user) {
-      throw new ResponseError({ status: 404, message: "User not found" });
-    }
-
-    return user;
-  } catch (error) {
-    console.error("[PRISMA ERROR] get user by ID DB:", error);
-    if (error instanceof ResponseError) {
-      throw error;
-    }
-
-    throw new ResponseError({ status: 500, message: JSON.stringify(error) });
-  }
-};
-
-export const createUser = async ({
-  name,
+export const handleLogin = async ({
+  email,
   password,
-  thumbnail = "https://res.cloudinary.com/dcssz2vax/image/upload/v1730274825/pfouophjvvivesrmxh8k.png",
-}: SignupInputData) => {
+}: LoginInputData): Promise<User> => {
   try {
-    const existingUser = await prisma.user.findUnique({
-      where: {
-        name,
-      },
-    });
+    const data = await signInWithEmailAndPassword(auth, email, password);
 
-    if (existingUser) {
-      throw new ResponseError({ status: 409, message: "User already exists" });
+    if (!data) {
+      throw new ResponseError({ status: 404, message: "User not found" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    return data.user;
+  } catch (error) {
+    console.error("[FIREBASE ERROR] get user FIREBASE AUTH:", error);
+    if (error instanceof FirebaseError) {
+      const credentialError = error.code === "auth/invalid-credential";
+      throw new ResponseError({
+        status: credentialError ? 400 : 500,
+        message: credentialError
+          ? "이메일과 비밀번호가 맞지 않습니다"
+          : error.message,
+      });
+    }
+    throw new ResponseError({ status: 500, message: JSON.stringify(error) });
+  }
+};
 
-    const user = await prisma.user.create({
-      data: {
-        name,
-        password: hashedPassword,
-        thumbnail,
-      },
+export const handleLogout = async () => {
+  try {
+    return signOut(auth);
+  } catch (error) {
+    console.error("[FIREBASE ERROR] get user FIREBASE AUTH:", error);
+    if (error instanceof FirebaseError) {
+      throw new ResponseError({
+        status: Number(error.code),
+        message: error.message,
+      });
+    }
+
+    throw new ResponseError({ status: 500, message: JSON.stringify(error) });
+  }
+};
+
+export const handleAuthState = (fn: NextOrObserver<User>) => {
+  return onAuthStateChanged(auth, fn);
+};
+
+export const createUser = async (
+  { email, password, nickname: displayName }: SignupInputData,
+  thumbnail?: string
+) => {
+  try {
+    const { user } = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    const randomNumber = Math.floor(Math.random() * 9) + 1;
+    const photoURL =
+      thumbnail ||
+      `${process.env.NEXT_PUBLIC_RANDOM_THUMBNAIL_URL}/thumbnail${randomNumber}.png`;
+    await updateProfile(user, {
+      photoURL,
+      displayName,
     });
 
-    return user;
+    return { ...user, photoURL, displayName };
   } catch (error) {
-    console.error("[PRISMA ERROR] create user DB:", error);
-    if (error instanceof ResponseError) {
-      throw error;
+    console.error("[FIREBASE ERROR] get user FIREBASE AUTH:", error);
+    if (error instanceof FirebaseError) {
+      throw new ResponseError({
+        status: Number(error.code),
+        message: error.message,
+      });
     }
 
     throw new ResponseError({ status: 500, message: JSON.stringify(error) });

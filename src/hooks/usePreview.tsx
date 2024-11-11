@@ -1,3 +1,4 @@
+import { uploadImage } from "@/services/upload";
 import { useState } from "react";
 
 export default function usePreview() {
@@ -7,12 +8,8 @@ export default function usePreview() {
     if (!selectedFile) return;
 
     if (selectedFile instanceof File) {
-      setPreview((prev) => {
-        if (prev) {
-          URL.revokeObjectURL(prev);
-        }
-
-        return URL.createObjectURL(selectedFile);
+      uploadImage(selectedFile).then((url) => {
+        setPreview(url);
       });
     }
 
