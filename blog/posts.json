@@ -1,7 +1,7 @@
 [
   {
-    "title": "RxJS로 흩어진 비동기 상태 관리하기",
-    "description": "...",
+    "title": "RxJS로 흩어진 상태 관리하기",
+    "description": "RxJS는 상태를 더욱 정교하게 관리할 수 있도록 도와준다. 동기와 비동기 상태를 합쳐서 관리할 수도 있고, 비동기상태끼리 합쳐서 관리할 수도 있다. 그리고 RxJS를 사용할 때,...",
     "date": "2024-10-28T00:00:00.000Z",
     "category": "RxJS",
     "path": "combine-async-using-rxjs",
@@ -9,15 +9,15 @@
   },
   {
     "title": "개발자 도구를 활용하여 메모리 누수 진단하기",
-    "description": "https://www.notion.so/sooooan/e9cd55c4d3e24cafbd75f61e2ce1b2f4?pvs=4...",
+    "description": "Angular에는 RxJS 라이브러리가 내장되어있다.   RxJS는 비동기 상태를 효율적으로 관리할 수 있다는 장점이 있지만, 구독을 취소하지 않으면 내부적으로 메모리 누수가 발생...",
     "date": "2024-10-30T00:00:00.000Z",
     "category": "Web Performance",
     "path": "project-performance-issue",
     "thumbnail": "project-performance-issue.png"
   },
   {
-    "title": "타입스크립트를 이용하여 안전한 네비게이트 만들기",
-    "description": "...",
+    "title": "타입스크립트 단언식 떼어내기",
+    "description": "타입스크립트는 프론트엔드 생태계에서 떼어낼 수 없는 존재가 되었다.   타입스크립트는 자바스크립트에서 생길 수 있는 타입 관련 런타임 에러를 사전에 방지하여 조금 더 안전하게 코드...",
     "date": "2024-10-22T00:00:00.000Z",
     "category": "Typescript",
     "path": "typescript-navigate",
