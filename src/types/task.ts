@@ -1,3 +1,5 @@
+import { $Enums } from "@prisma/client";
+
 export type Task = {
   id: string;
   title: string;
@@ -5,7 +7,7 @@ export type Task = {
   assigneeId: string;
   subtasks?: string[];
   todos?: number;
-  kanbanId: TaskStatus;
+  kanbanId: $Enums.TaskStatus;
 };
 
 export const enum TaskStatus {
@@ -18,7 +20,7 @@ export const enum TaskStatus {
 export type KanbanData = {
   id: string;
   title: string;
-  status: TaskStatus;
+  status: $Enums.TaskStatus;
   tasks: string[];
 };
 
