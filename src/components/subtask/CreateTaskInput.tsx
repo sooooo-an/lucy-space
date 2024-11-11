@@ -1,5 +1,10 @@
 import React from "react";
 
 export default function CreateTaskInput() {
-  return <button></button>;
+  return (
+    <form>
+      <input type="text" />
+      <button type="submit">Add Task</button>
+    </form>
+  );
 }

@@ -6,10 +6,10 @@ import CreateTaskInput from "./CreateTaskInput";
 import { useAuth } from "@/contexts/AuthContext";
 import AddIcon from "../ui/icons/AddIcon";
 import { useLoginModal } from "@/contexts/LoginModalContext";
-import { BoardData } from "@/types/task";
+import { KanbanData } from "@/types/task";
 
 type Props = {
-  board: BoardData;
+  board: KanbanData;
 };
 
 export default function Kanban({ board: { title, tasks } }: Props) {
