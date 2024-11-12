@@ -1,0 +1,165 @@
+{
+  "channelLayer": {
+    "header": {
+      "title": "마루가 골라주는 점심 메뉴",
+      "app_id": "maru-lunch"
+    },
+    "body": {
+      "elements": [
+        {
+          "type": "info_card",
+          "items": [
+            {
+              "label": "오늘의 메뉴",
+              "type": "list",
+              "list": {
+                "id": "menu",
+                "options": [
+                  {
+                    "type": "plain_text",
+                    "text": "김치찌개",
+                    "id": "kimchi"
+                  },
+                  {
+                    "type": "plain_text",
+                    "text": "피자",
+                    "id": "pizza"
+                  },
+                  {
+                    "type": "plain_text",
+                    "text": "초밥",
+                    "id": "sushi"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "buttons": [
+        {
+          "type": "button",
+          "label": "Close",
+          "style": "primary",
+          "action_id": "close_view"
+        },
+        {
+          "type": "button",
+          "label": "Submit",
+          "style": "primary",
+          "action_id": "start_order"
+        }
+      ]
+    }
+  },
+  "taskModal": {
+    "header": {
+      "title": "음식점 리스트",
+      "app_id": "maru-lunch"
+    },
+    "body": {
+      "elements": [
+        {
+          "type": "info_card",
+          "items": [
+            {
+              "label": "음식점 리스트 지도",
+              "type": "dropdown",
+              "dropdown": {
+                "id": "restaurant",
+                "options": [
+                  {
+                    "type": "plain_text",
+                    "text": "피자헛",
+                    "link": "https://www.pizzahut.co.kr/",
+                    "id": "pizzahut"
+                  },
+                  {
+                    "type": "plain_text",
+                    "text": "피자헛",
+                    "link": "https://www.pizzahut.co.kr/",
+                    "id": "pizzahut"
+                  },
+                  {
+                    "type": "plain_text",
+                    "text": "피자헛",
+                    "link": "https://www.pizzahut.co.kr/",
+                    "id": "pizzahut"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "buttons": [
+        {
+          "type": "button",
+          "label": "Close",
+          "style": "primary",
+          "action_id": "close_view"
+        },
+        {
+          "type": "button",
+          "label": "Add",
+          "style": "primary",
+          "action_id": "add_restaurant_to_list"
+        }
+      ]
+    }
+  },
+  "rightPanel": {
+    "header": {
+      "title": "음식점 추가하기",
+      "app_id": "maru-lunch"
+    },
+    "body": {
+      "elements": [
+        {
+          "type": "info_card",
+          "items": [
+            {
+              "label": "음식점 추가하기",
+              "type": "input",
+              "input": {
+                "id": "restaurant_add",
+                "options": [
+                  {
+                    "type": "text",
+                    "placeholder": "음식점 이름을 입력해주세요",
+                    "id": "restaurant_name"
+                  },
+                  {
+                    "type": "text",
+                    "placeholder": "음식점 링크를 입력해주세요",
+                    "id": "restaurant_link"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "buttons": [
+        {
+          "type": "button",
+          "label": "Close",
+          "style": "primary",
+          "action_id": "close_view"
+        },
+        {
+          "type": "button",
+          "label": "Add",
+          "style": "primary",
+          "action_id": "add_restaurant"
+        }
+      ]
+    }
+  }
+}

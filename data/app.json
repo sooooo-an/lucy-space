@@ -1,0 +1,9 @@
+{
+  "appInfo": {
+    "appName": "마루와 함께 하는 점심 투표 앱",
+    "appDescription": "마루와 함께하는 점심 투표 앱입니다. 점심 메뉴를 투표해주세요!",
+    "appId": "maru-lunch",
+    "appIcon": "https://res.cloudinary.com/dcssz2vax/image/upload/v1731305909/thumbnail4.png"
+  },
+  "callbackUrl": "https://lucy-an.space/api/v1/callback"
+}
