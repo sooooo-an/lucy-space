@@ -1,10 +1,8 @@
 export type Task = {
   id: string;
   title: string;
-  deadline?: Date;
-  assigneeId: string;
+  deadline?: string;
   subtasks?: string[];
-  todos?: number;
   kanbanId: string;
 };
 

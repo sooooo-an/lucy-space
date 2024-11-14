@@ -1,11 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import TaskList from "./TaskList";
-import CreateTaskInput from "./CreateTaskInput";
-import { useAuth } from "@/contexts/AuthContext";
-import AddIcon from "../ui/icons/AddIcon";
-import { useLoginModal } from "@/contexts/LoginModalContext";
 import { KanbanData } from "@/types/task";
 
 type Props = {
@@ -13,19 +9,6 @@ type Props = {
 };
 
 export default function Kanban({ board: { title, tasks } }: Props) {
-  const { user } = useAuth();
-  const [isCreateTaskInput, toggleCreateTaskInput] = useState(false);
-  const { onOpen } = useLoginModal();
-
-  const onClickAddTask = () => {
-    if (!user) {
-      onOpen();
-      return;
-    }
-
-    toggleCreateTaskInput(true);
-  };
-
   return (
     <article className="w-[300px] p-2 flex-shrink-0 flex-grow-0 flex-auto">
       <div className="flex gap-4 mb-8">
@@ -36,18 +19,7 @@ export default function Kanban({ board: { title, tasks } }: Props) {
           {tasks?.length}
         </span>
       </div>
-      <TaskList />
-
-      {isCreateTaskInput ? (
-        <CreateTaskInput />
-      ) : (
-        <button
-          onClick={onClickAddTask}
-          className="bg-white flex w-full p-2 text-gray-400 items-center justify-center rounded-lg my-2 shadow-sm border border-gray-100"
-        >
-          <AddIcon />
-        </button>
-      )}
+      <TaskList tasksId={tasks} />
     </article>
   );
 }
