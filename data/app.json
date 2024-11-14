@@ -5,5 +5,5 @@
     "appId": "maru-lunch",
     "appIcon": "https://res.cloudinary.com/dcssz2vax/image/upload/v1731305909/thumbnail4.png"
   },
-  "callbackUrl": "https://lucy-an.space/api/v1/callback"
+  "callbackUrl": "https://lucy-an.space/api/callback"
 }
