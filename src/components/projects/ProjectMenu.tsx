@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 
 import { usePathname } from "next/navigation";
-import { AlertIcon, HomeIcon, LinkIcon, TaskIcon } from "../ui/icons";
+import { HomeIcon, LinkIcon, TaskIcon } from "../ui/icons";
 const PROJECT_MENUS = [
   {
     name: "Home",
@@ -15,11 +15,6 @@ const PROJECT_MENUS = [
     name: "Developers & Store",
     href: "/projects/developers-store",
     icon: <LinkIcon />,
-  },
-  {
-    name: "Notification",
-    href: "/projects/notification",
-    icon: <AlertIcon />,
   },
   {
     name: "Subtask",
