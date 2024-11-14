@@ -42,14 +42,14 @@
         {
           "type": "button",
           "label": "Close",
-          "style": "primary",
+          "style": "primary_outline",
           "action_id": "close_view"
         },
         {
           "type": "button",
           "label": "Submit",
           "style": "primary",
-          "action_id": "start_order"
+          "action_id": "submit_vote"
         }
       ]
     }
@@ -100,14 +100,14 @@
         {
           "type": "button",
           "label": "Close",
-          "style": "primary",
+          "style": "primary_outline",
           "action_id": "close_view"
         },
         {
           "type": "button",
           "label": "Add",
           "style": "primary",
-          "action_id": "add_restaurant_to_list"
+          "action_id": "submit_add_restaurant_map"
         }
       ]
     }
@@ -150,14 +150,14 @@
         {
           "type": "button",
           "label": "Close",
-          "style": "primary",
+          "style": "primary_outline",
           "action_id": "close_view"
         },
         {
           "type": "button",
           "label": "Add",
           "style": "primary",
-          "action_id": "add_restaurant"
+          "action_id": "submit_add_restaurant"
         }
       ]
     }

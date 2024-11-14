@@ -8,6 +8,7 @@ export default function NotificationPage() {
         title="Notification Project"
         description="사용자에게 알림을 전달하고, 동일 알림을 스레드로 그룹핑하여 관리 효율성을 개선하였습니다"
       />
+      <div>위의 종버튼을 눌러 알림을 확인해보세요.</div>
     </>
   );
 }

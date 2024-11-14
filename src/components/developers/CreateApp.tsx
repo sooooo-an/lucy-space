@@ -1,5 +1,5 @@
 import React from "react";
-import AppPanel from "./AppPanel";
+import Panel from "../ui/Panel";
 import Image from "next/image";
 import Button from "../ui/Button";
 import { useAppAction } from "@/contexts/AppActionContext";
@@ -20,10 +20,7 @@ export default function CreateApp({ isOpen, appInfo }: Props) {
   };
 
   return (
-    <AppPanel
-      isOpen={isOpen}
-      title="1. App을 생성하고, 관리자 승인을 받습니다."
-    >
+    <Panel isOpen={isOpen} title="1. App을 생성하고, 관리자 승인을 받습니다.">
       <>
         <section className="flex">
           <div className="mr-3">
@@ -72,6 +69,6 @@ export default function CreateApp({ isOpen, appInfo }: Props) {
           />
         </div>
       </>
-    </AppPanel>
+    </Panel>
   );
 }

@@ -1,4 +1,4 @@
-import { InputData } from "@/types/auth";
+import { InputData } from "@/types/ui";
 
 export const APP_ACTION: InputData[] = [
   {
@@ -12,12 +12,14 @@ export const APP_ACTION: InputData[] = [
     type: "radio",
     name: "appAction",
     id: "taskModal",
+    disabled: true,
   },
   {
     label: "오른쪽 패널",
     type: "radio",
     name: "appAction",
     id: "rightPanel",
+    disabled: true,
   },
 ];
 

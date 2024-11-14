@@ -14,7 +14,7 @@ export default async function DevelopersStorePage() {
       />
 
       <div className="flex flex-1 min-h-0 overflow-y-auto">
-        <AppActionProvider>
+        <AppActionProvider appInfo={appInfo}>
           <DeveloperContent appInfo={appInfo} callbackUrl={callbackUrl} />
         </AppActionProvider>
       </div>

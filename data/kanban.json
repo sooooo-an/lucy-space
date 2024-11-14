@@ -1,0 +1,26 @@
+[
+  {
+    "id": "BACKLOG",
+    "title": "Backlog",
+    "status": "BACKLOG",
+    "tasks": ["1", "2", "3"]
+  },
+  {
+    "id": "TODO",
+    "title": "To Do",
+    "status": "TODO",
+    "tasks": ["4", "5", "6", "13"]
+  },
+  {
+    "id": "DOING",
+    "title": "Doing",
+    "status": "DOING",
+    "tasks": ["7", "8", "9", "14"]
+  },
+  {
+    "id": "DONE",
+    "title": "Done",
+    "status": "BACKLOG",
+    "tasks": ["10", "11", "12"]
+  }
+]

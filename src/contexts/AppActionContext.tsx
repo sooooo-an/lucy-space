@@ -1,17 +1,24 @@
 "use client";
 
-import { AppActionProcess, AppActionType } from "@/types/app";
+import { AppActionProcess, AppActionType, AppInfoType } from "@/types/app";
 import { useContext, useState, createContext } from "react";
 
 type AppActionContextType = {
   process: AppActionProcess;
   updateProcess: (process: AppActionProcess, type?: AppActionType) => void;
   appActionType: "channelLayer" | "taskModal" | "rightPanel";
+  appInfo: AppInfoType;
 };
 
 const AppActionContext = createContext<AppActionContextType | null>(null);
 
-export function AppActionProvider({ children }: { children: React.ReactNode }) {
+export function AppActionProvider({
+  children,
+  appInfo,
+}: {
+  children: React.ReactNode;
+  appInfo: AppInfoType;
+}) {
   const [process, setProcess] = useState<AppActionProcess>("createApp");
   const [appActionType, setAppActionType] =
     useState<AppActionType>("channelLayer");
@@ -29,6 +36,7 @@ export function AppActionProvider({ children }: { children: React.ReactNode }) {
         updateProcess,
         process,
         appActionType,
+        appInfo,
       }}
     >
       {children}

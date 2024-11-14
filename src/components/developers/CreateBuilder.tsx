@@ -1,24 +1,28 @@
 import React from "react";
-import AppPanel from "./AppPanel";
+import Panel from "../ui/Panel";
 import Button from "../ui/Button";
 import { useAppAction } from "@/contexts/AppActionContext";
 import { APP_ACTION_PROCESS } from "@/constants/app-action";
-import { BuilderType } from "@/types/builder";
+import useBuilder from "@/hooks/useBuilder";
+
 type Props = {
   isOpen: boolean;
   callbackUrl: string;
-  builder: BuilderType | null;
 };
 
-export default function CreateBuilder({ isOpen, callbackUrl, builder }: Props) {
-  const { updateProcess } = useAppAction();
+export default function CreateBuilder({ isOpen, callbackUrl }: Props) {
+  const { updateProcess, process, appActionType } = useAppAction();
+  const builder = useBuilder(
+    process === APP_ACTION_PROCESS.SET_CALLBACK_URL,
+    appActionType
+  );
 
   const setCallbackUrl = () => {
     updateProcess(APP_ACTION_PROCESS.EXECUTE_APP_ACTION);
   };
 
   return (
-    <AppPanel
+    <Panel
       isOpen={isOpen}
       title="3. 설정된 API의 응답값을 통해 컴포넌트를 만듭니다."
     >
@@ -47,7 +51,7 @@ export default function CreateBuilder({ isOpen, callbackUrl, builder }: Props) {
               className="rounded-md p-1 outline-none text-sm mb-2 resize-none h-52"
               readOnly
               id="description"
-              defaultValue={JSON.stringify(builder, null, 2)}
+              defaultValue={builder && JSON.stringify(builder, null, 2)}
             ></textarea>
           )}
 
@@ -59,6 +63,6 @@ export default function CreateBuilder({ isOpen, callbackUrl, builder }: Props) {
           />
         </div>
       </>
-    </AppPanel>
+    </Panel>
   );
 }

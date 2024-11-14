@@ -1,5 +1,5 @@
 import React from "react";
-import ArrowIcon from "../ui/icons/ArrowIcon";
+import ArrowIcon from "./icons/ArrowIcon";
 
 type Props = {
   children: React.ReactNode;
@@ -8,12 +8,7 @@ type Props = {
   toggleOpen?: () => void;
 };
 
-export default function AppPanel({
-  children,
-  title,
-  isOpen,
-  toggleOpen,
-}: Props) {
+export default function Panel({ children, title, isOpen, toggleOpen }: Props) {
   return (
     <section className="w-[500px]">
       <div className="bg-white p-5 flex justify-between rounded-tr-md rounded-tl-md shadow-sm">

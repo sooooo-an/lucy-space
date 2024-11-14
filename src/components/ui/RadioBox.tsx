@@ -8,7 +8,7 @@ type Props = {
 };
 
 export default function RadioBox({
-  item: { id, type, name, label },
+  item: { id, type, name, label, disabled },
   checked,
   onChange,
 }: Props) {
@@ -21,6 +21,7 @@ export default function RadioBox({
         className="mr-1"
         checked={checked === id}
         onChange={onChange}
+        disabled={disabled}
       />
       <label htmlFor={id}>{label}</label>
     </div>

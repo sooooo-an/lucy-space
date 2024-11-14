@@ -1,3 +1,5 @@
+import { UIColorType } from "./ui";
+
 export type BuilderResponseType = {
   builder: BuilderType;
 };
@@ -53,7 +55,7 @@ type DropdownTypeItem = {
 
 type OptionType = {
   type: string;
-  placeholder: string;
+  text: string;
   id: string;
 };
 
@@ -64,6 +66,6 @@ type BuilderFooter = {
 type BuilderButton = {
   type: string;
   label: string;
-  style: "primary" | "secondary" | "primary_full" | "secondary_full";
+  style: UIColorType;
   action_id: string;
 };

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AppPanel from "./AppPanel";
+import Panel from "../ui/Panel";
 import {
   APP_ACTION,
   APP_ACTION_PROCESS,
@@ -30,7 +30,7 @@ export default function CreateAppAction({ isOpen }: Props) {
   };
 
   return (
-    <AppPanel isOpen={isOpen} title="2. App Action을 생성합니다.">
+    <Panel isOpen={isOpen} title="2. App Action을 생성합니다.">
       <div>
         <p className="text-sm text-gray-700 font-bold mb-2">App 액션 종류</p>
 
@@ -52,6 +52,6 @@ export default function CreateAppAction({ isOpen }: Props) {
         type="button"
         onClick={setAppAction}
       />
-    </AppPanel>
+    </Panel>
   );
 }
