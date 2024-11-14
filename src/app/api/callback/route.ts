@@ -36,5 +36,10 @@ export async function POST(req: NextRequest) {
     if (error instanceof ResponseError) {
       throw error;
     }
+
+    throw new ResponseError({
+      status: 400,
+      message: "Bad Request",
+    });
   }
 }

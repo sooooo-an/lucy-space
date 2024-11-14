@@ -45,7 +45,7 @@ export function BuilderModalProvider({
       default:
         if (actionId.startsWith("submit_")) {
           httpClient
-            .post<{ data: string }>("/api/v1/callback", { body: { actionId } })
+            .post<{ data: string }>("/api/callback", { body: { actionId } })
             .finally(onClose);
         }
         break;
