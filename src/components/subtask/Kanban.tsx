@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import TaskList from "./TaskList";
 import { KanbanData } from "@/types/task";
 
 type Props = {
@@ -19,7 +18,6 @@ export default function Kanban({ board: { title, tasks } }: Props) {
           {tasks?.length}
         </span>
       </div>
-      <TaskList tasksId={tasks} />
     </article>
   );
 }

@@ -1,4 +1,4 @@
-import { InputData } from "@/types/auth";
+import { InputData } from "@/types/ui";
 import React from "react";
 
 type Props = {
