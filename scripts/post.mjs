@@ -5,12 +5,14 @@ const FRONT_MATTER_REGEX = /^---\n([\s\S]+?)\n---/;
 const NEW_LINE_REGEX = /\n|\\/g;
 const SPECIAL_CHARACTERS_REGEX = /[*#\-`]/g;
 const DEFAULT_CATEGORY = "Frontend";
+const TABLE_OF_CONTENTS_REGEX = /### 목차[\s\S]*?---/g;
 
 const extractFrontMatter = (content, fileName) => {
   const match = content.match(FRONT_MATTER_REGEX);
   const description =
     content
       .replace(FRONT_MATTER_REGEX, "")
+      .replace(TABLE_OF_CONTENTS_REGEX, "")
       .replace(NEW_LINE_REGEX, " ")
       .replace(SPECIAL_CHARACTERS_REGEX, "")
       .trim()

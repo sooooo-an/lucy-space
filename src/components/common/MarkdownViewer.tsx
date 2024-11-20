@@ -41,9 +41,9 @@ export default function MarkdownViewer({ content }: Props) {
           <Image
             src={image.src || ""}
             alt={image.alt || ""}
-            width={500}
+            width={600}
             height={350}
-            className="lg:w-2/3 w-full"
+            className=" w-full"
           />
         ),
       }}
