@@ -1,24 +1,23 @@
 import React from "react";
-import ArrowIcon from "./icons/ArrowIcon";
 
 type Props = {
   children: React.ReactNode;
   title: string;
-  isOpen: boolean;
-  toggleOpen?: () => void;
 };
 
-export default function Panel({ children, title, isOpen, toggleOpen }: Props) {
+export default function Panel({ children, title }: Props) {
   return (
-    <section className="w-[500px]">
-      <div className="bg-white p-5 flex justify-between rounded-tr-md rounded-tl-md shadow-sm">
-        <h4 className="font-bold">{title}</h4>
-        <button onClick={toggleOpen}>
-          <ArrowIcon isOpen={isOpen} />
-        </button>
-      </div>
-
-      {isOpen && <div className=" bg-slate-100 p-5">{children}</div>}
+    <section className="w-full mb-16 ">
+      <h3
+        className="relative font-bold text-xl px-1 inline"
+        style={{
+          background:
+            "linear-gradient(rgba(0, 0, 0, 0) 66%, rgb(192 132 252) 33%)",
+        }}
+      >
+        {title}
+      </h3>
+      <div className="mt-4">{children}</div>
     </section>
   );
 }

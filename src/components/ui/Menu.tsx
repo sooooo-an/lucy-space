@@ -15,10 +15,6 @@ const MENUS: MenuType[] = [
     name: "Posts",
     href: "/posts",
   },
-  {
-    name: "Projects",
-    href: "/projects",
-  },
 ];
 
 export default function Menu() {

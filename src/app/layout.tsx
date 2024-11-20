@@ -29,7 +29,9 @@ export default function RootLayout({
       <body>
         <Header />
         <main className={`flex justify-center flex-1 ${IBMPlexSans.className}`}>
-          {children}
+          <div className="flex flex-col max-w-full lg:w-[900px] px-2">
+            {children}
+          </div>
         </main>
         <Footer />
         <div id="portal" />

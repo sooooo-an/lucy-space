@@ -4,7 +4,7 @@ import Menu from "../ui/Menu";
 
 export default function Header() {
   return (
-    <header className="flex items-center justify-center py-8 px-2">
+    <header className="flex items-center justify-center py-8">
       <div className="flex container items-center justify-between">
         <Logo />
         <Menu />
