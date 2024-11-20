@@ -8,7 +8,7 @@ type Props = {
 
 export default function Categories({ onClick, categories, selected }: Props) {
   return (
-    <ul className="flex gap-4 py-4">
+    <ul className="flex gap-4 py-4 flex-wrap">
       {categories.map((category) => (
         <li key={category}>
           <button
