@@ -37,15 +37,26 @@ export default function MarkdownViewer({ content }: Props) {
             </code>
           );
         },
-        img: (image) => (
-          <Image
-            src={image.src || ""}
-            alt={image.alt || ""}
-            width={600}
-            height={350}
-            className=" w-full"
-          />
-        ),
+        img: (image) => {
+          const isVideo = image.src?.match(/.mov$/);
+          if (isVideo) {
+            return (
+              <video controls>
+                <source src={image.src || ""} type="video/mp4" />
+              </video>
+            );
+          }
+
+          return (
+            <Image
+              src={image.src || ""}
+              alt={image.alt || ""}
+              width={600}
+              height={350}
+              className=" w-full"
+            />
+          );
+        },
       }}
     >
       {content}

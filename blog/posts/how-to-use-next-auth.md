@@ -55,7 +55,9 @@ category: Next.js
 OAuth 플로우를 Next.js로 구현해보자
 
 1. Google Console 설정 \
-   먼저 [Google Cloud Console](https://console.cloud.google.com/apis/credentials)에서 OAuth 클라이언트를 생성해야한다. 어떤 앱이 어떤 권한을 원하는 지에 대해서 알고있어야 하기 때문에 OAuth 클라이언트를 생성해야한다.
+   먼저 [Google Cloud Console](https://console.cloud.google.com/apis/credentials)에서 OAuth 클라이언트를 생성해야한다. OAuth 클라이언트를 생성하기 전에 먼저 OAuth 스크린을 설정해주어야한다. 그리고 `Authorized JavaScript origins`에는 내 개발서버의 url과 운영서버의 url을 작성해주면 된다. `redirect_url`도 작성을 해야하는데, 코드를 먼저 작성한 뒤에 다시 작성해보도록 하자
+
+   ![get client id](/images/posts/how-to-use-next-auth/get-client-id.mov)
 
 2. 환경 변수 설정
    `.env.local` 파일에 다음 변수를 추가한다
@@ -71,12 +73,33 @@ OAuth 플로우를 Next.js로 구현해보자
 
 #### Next.js 코드 예시
 
+1. Google 인증 페이지로 리디렉션하기
+
+```
+
+```
+
+2. Google에서 받은 Authorization Code 처리 및 Access Token 요청
+
+3. API 요청으로 Google Calendar와 통신
+
 ---
 
 ## next-auth 사용하기
 
-next-auth 라이브러리는 어쩌고 저쩌고 어쩌고 저쩌고
+next-auth 라이브러리는 오픈 소스 라이브러리로 엄청나게 많은 Provider가 내장되어 있어서 우리가 따로 문서를 확인하지 않고도, Provider만 호출해서 사용할 수 있다. next-auth는 어쩌구 저쩌구
+
+OAuth 코드를 직접 짜게된다면, CSRF를 방지하기 위한 방어로직을 직접 구현해야하는 어려움이 있다.
+CSRF는 OAuth 창에서 탈취가 일어나서 생길 수 있는 웹 보안 이슈로
+
+#### next-auth 동작 방식
+
+next-auth는 app의 어쩌꼬저쩌고
 
 ---
 
 ## OAuth 코드 예시: next-auth 라이브러리 사용하기
+
+1. Next.js 프로젝트에 next-auth를 설치한다
+
+2.
