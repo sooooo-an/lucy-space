@@ -63,7 +63,7 @@ JavaScript가 페이지의 일부 요소를 변경하면, 브라우저는 이를
 
 | 단계                  | 정의                        | 트리거되는 CSS 속성                               | 예시 코드                                 |
 | --------------------- | --------------------------- | ------------------------------------------------- | ----------------------------------------- |
-| **Recalculate Style** | 스타일 규칙 재계산          | `color`, `font-family`, `visibility`              | `element.style.color = 'red';`            |
+| **Recalculate Style** | 스타일 규칙 재계산          | `font-family`, `visibility`                       | `element.style.visibility = 'visible';`   |
 | **Reflow (Layout)**   | 레이아웃(크기, 위치) 재계산 | `width`, `height`, `margin`, `padding`, `display` | `element.style.width = '300px';`          |
 | **Repaint**           | 픽셀 데이터 다시 그림       | `background-color`, `box-shadow`, `border-color`  | `element.style.backgroundColor = 'blue';` |
 | **Composite**         | GPU 레이어 결합 및 렌더링   | `transform`, `opacity`, `will-change`             | `element.style.transform = 'scale(1.5)';` |
