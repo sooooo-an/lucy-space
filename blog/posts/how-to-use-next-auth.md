@@ -8,9 +8,9 @@ category: Next.js
 
 [What is OAuth](#what-is-oauth) \
 [OAuth Flow](#oauth-flow) \
-[OAuth 코드 예시](#oauth-코드-예시) \
-[next-auth 톱아보기](#next-auth-톱아보기) \
-[next-auth 코드 예시](#next-auth-코드-예시)
+[Next.js 코드 예시: 직접 구현하기](#nextjs-코드-예시-직접-구현하기)
+[Next.js 코드 예시: next-auth 라이브러리로 구현하기](#nextjs-코드-예시-next-auth-라이브러리로-구현하기)
+[직접 구현 vs. next-auth](#직접-구현-vs-next-auth)
 
 ---
 
@@ -50,7 +50,7 @@ category: Next.js
 
 ---
 
-## OAuth 코드 예시: Next.js에서 구현하기
+## Next.js 코드 예시: 직접 구현하기
 
 OAuth 플로우를 Next.js로 구현해보자
 
@@ -73,33 +73,302 @@ OAuth 플로우를 Next.js로 구현해보자
 
 #### Next.js 코드 예시
 
-1. Google 인증 페이지로 리디렉션하기
+> 코드는 [구글 OAuth 2.0 문서](https://developers.google.com/identity/protocols/oauth2/javascript-implicit-flow#redirecting)를 보고 구현하였음
 
-```
+일단, 아까 설정해주지 못한 `redirect_url`을 `api/auth/callback` 앤드포인트로 추가해주자
+![redirect_url 셋팅하기](/images/posts/how-to-use-next-auth/set-redirect-url.mov)
 
-```
+1. `/api/auth/login/route.ts`에 Google 인증 페이지로 리디렉션하는 코드를 구현해보자.
 
-2. Google에서 받은 Authorization Code 처리 및 Access Token 요청
+   ```typescript
+   import { NextResponse } from "next/server";
 
-3. API 요청으로 Google Calendar와 통신
+   export async function GET() {
+     const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
+     const options = {
+       redirect_uri: process.env.GOOGLE_REDIRECT_URL!,
+       client_id: process.env.GOOGLE_CLIENT_ID!,
+       response_type: "code",
+       scope: "email profile",
+     };
 
----
+     const qs = new URLSearchParams(options);
+     return NextResponse.redirect(`${rootUrl}?${qs.toString()}`);
+   }
+   ```
 
-## next-auth 사용하기
+   `response_type`을 `code` 또는 `token`으로 설정할 수 있는데, token으로 작성하게된다면, 클라이언트 queryParam으로 token이 노출되기 떄문에 보안 이슈가 있을 수 있다. 그렇기 때문에 code로 설정하여 code를 queryParam으로 받아서 다시 한번 API를 호출하는 것이 좋다.
 
-next-auth 라이브러리는 오픈 소스 라이브러리로 엄청나게 많은 Provider가 내장되어 있어서 우리가 따로 문서를 확인하지 않고도, Provider만 호출해서 사용할 수 있다. next-auth는 어쩌구 저쩌구
+2. 그럼 이제 `/api/auth/callback` 코드를 구현해보자 `code`를 이용하여 `access_token`을 받아오는 로직을 구현해보자
 
-OAuth 코드를 직접 짜게된다면, CSRF를 방지하기 위한 방어로직을 직접 구현해야하는 어려움이 있다.
-CSRF는 OAuth 창에서 탈취가 일어나서 생길 수 있는 웹 보안 이슈로
+   ```typescript
+   import { NextRequest, NextResponse } from "next/server";
 
-#### next-auth 동작 방식
+   export async function GET(req: NextRequest) {
+     if (!req.nextUrl.searchParams.has("code")) {
+       throw new Error("No code found in query string");
+     }
 
-next-auth는 app의 어쩌꼬저쩌고
+     try {
+       const code = req.nextUrl.searchParams.get("code");
+       const tokenResponse = await fetch(
+         "https://oauth2.googleapis.com/token",
+         {
+           method: "POST",
+           body: JSON.stringify({
+             code,
+             client_id: process.env.GOOGLE_CLIENT_ID!,
+             client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+             redirect_uri: process.env.GOOGLE_REDIRECT_URL!,
+             grant_type: "authorization_code",
+           }),
+           headers: { "Content-Type": "application/json" },
+         }
+       );
 
----
+       const data = await tokenResponse.json();
 
-## OAuth 코드 예시: next-auth 라이브러리 사용하기
+       return NextResponse.json({ data });
+     } catch (error) {
+       console.error("Error exchanging token:", JSON.stringify(error, null, 2));
+       if (error instanceof Error) {
+         throw error;
+       }
+     }
+   }
+   ```
 
-1. Next.js 프로젝트에 next-auth를 설치한다
+3. 이 `access_token`을 이용하여 회원정보를 불러오는 로직을 추가해보자. 현재는 포함되어 있지 않지만, DB에서 회원정보를 찾은 후, 존재하지 않는 이메일이라면 회원으로 만들어주는 로직도 추가해볼 수 있다.
 
-2.
+   ```typescript
+   import { NextRequest, NextResponse } from "next/server";
+
+   export async function GET(req: NextRequest) {
+     if (!req.nextUrl.searchParams.has("code")) {
+       throw new Error("No code found in query string");
+     }
+
+     try {
+       const code = req.nextUrl.searchParams.get("code");
+       const tokenResponse = await fetch(
+         "https://oauth2.googleapis.com/token",
+         {
+           method: "POST",
+           body: JSON.stringify({
+             code,
+             client_id: process.env.GOOGLE_CLIENT_ID!,
+             client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+             redirect_uri: process.env.GOOGLE_REDIRECT_URL!,
+             grant_type: "authorization_code",
+           }),
+           headers: { "Content-Type": "application/json" },
+         }
+       );
+
+       const data = await tokenResponse.json();
+
+       const userInfoResponse = await fetch(
+         "https://www.googleapis.com/oauth2/v2/userinfo",
+         {
+           headers: { Authorization: `Bearer ${data.access_token}` },
+         }
+       );
+
+       const userInfo = await userInfoResponse.json();
+       console.log(userInfo);
+
+       const response = NextResponse.redirect("http://localhost:3000");
+
+       return response;
+     } catch (error) {
+       console.error("Error exchanging token:", JSON.stringify(error, null, 2));
+       if (error instanceof Error) {
+         throw error;
+       }
+     }
+   }
+   ```
+
+4. 지금까지 로직을 보면 로그인은 되었으나 로그인이 유지가 되지는 않는다. jwt 토큰을 이용하여 토큰을 쿠키에 저장해주는 로직을 구현해보자.
+
+   ```typescript
+   import { NextRequest, NextResponse } from "next/server";
+   import jwt from "jsonwebtoken";
+
+   export async function GET(req: NextRequest) {
+     if (!req.nextUrl.searchParams.has("code")) {
+       throw new Error("No code found in query string");
+     }
+
+     try {
+       const code = req.nextUrl.searchParams.get("code");
+       const tokenResponse = await fetch(
+         "https://oauth2.googleapis.com/token",
+         {
+           method: "POST",
+           body: JSON.stringify({
+             code,
+             client_id: process.env.GOOGLE_CLIENT_ID!,
+             client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+             redirect_uri: process.env.GOOGLE_REDIRECT_URL!,
+             grant_type: "authorization_code",
+           }),
+           headers: { "Content-Type": "application/json" },
+         }
+       );
+
+       const data = await tokenResponse.json();
+
+       const userInfoResponse = await fetch(
+         "https://www.googleapis.com/oauth2/v2/userinfo",
+         {
+           headers: { Authorization: `Bearer ${data.access_token}` },
+         }
+       );
+
+       const userInfo = await userInfoResponse.json();
+       const token = jwt.sign(userInfo, process.env.JWT_SECRET!, {
+         expiresIn: "1h",
+       });
+
+       const response = NextResponse.redirect("http://localhost:3000");
+       response.cookies.set("token", token, { httpOnly: true });
+
+       return response;
+     } catch (error) {
+       console.error("Error exchanging token:", JSON.stringify(error, null, 2));
+       if (error instanceof Error) {
+         throw error;
+       }
+     }
+   }
+   ```
+
+5. 이제 `/api/auth/me` 라우터를 만들어서 이 쿠키가 있는지 확인 한 뒤 회원정보를 가지고 오는 로직을 구현하여 클라이언트에서 사용할 수 있게 한다.
+
+   ```typescript
+   import { NextRequest, NextResponse } from "next/server";
+   import jwt from "jsonwebtoken";
+
+   export async function GET(req: NextRequest) {
+     const token = req.cookies.get("token")?.value;
+
+     if (!token) {
+       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+     }
+
+     try {
+       const user = jwt.verify(token, process.env.JWT_SECRET!);
+       return NextResponse.json(user);
+     } catch (error) {
+       return NextResponse.json({ message: "Invalid token" }, { status: 401 });
+     }
+   }
+   ```
+
+## Next.js 코드 예시: next-auth 라이브러리로 구현하기
+
+next-auth는 OAuth를 포함한 다양한 인증 방식을 추상화하여 간단한 설정만으로 사용할 수 있도록 도와주는 라이브러리이다.
+앞서 구현했던 OAuth 로직을 next-auth 라이브러리를 사용하여 더 간단하게 구현해보자.
+
+1. next-auth 설치 \
+   `npm install next-auth`
+
+2. 환경 변수 설정
+
+   ```md
+   GOOGLE_CLIENT_ID=<Google Client ID>
+   GOOGLE_CLIENT_SECRET=<Google Client Secret>
+   NEXTAUTH_URL=http://localhost:3000
+   JWT_SECRET=<Random String>
+   ```
+
+3. `app/api/auth/[...nextauth]/route.ts`을 생성한다.
+   next-auth의 API 엔드포인트를 설정하기 위해 파일을 생성한다. `[...]`는 동적 라우팅으로, 이 설정을 통해 `api/auth/*` 경로를 자동으로 처리할 수 있게 된다.
+
+   ```typescript
+   import NextAuth from "next-auth";
+   import GoogleProvider from "next-auth/providers/google";
+
+   const handler = NextAuth({
+     providers: [
+       GoogleProvider({
+         clientId: process.env.GOOGLE_CLIENT_ID!,
+         clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+       }),
+     ],
+     secret: process.env.JWT_SECRET,
+   });
+
+   export { handler as GET, handler as POST };
+   ```
+
+4. `SessionProvider`로 로그인 상태 유지
+   `SessionProvider`를 사용하여 애플리케이션의 컴포넌트를 감싸면 인증 세션을 전역적으로 관리할 수 있다.
+
+   ```typescript
+   import { SessionProvider } from "next-auth/react";
+
+   export default function RootLayout({
+     children,
+   }: {
+     children: React.ReactNode;
+   }) {
+     return (
+       <html lang="en">
+         <body>
+           <SessionProvider>{children}</SessionProvider>
+         </body>
+       </html>
+     );
+   }
+   ```
+
+5. 회원 정보 DB 저장 로직 추가 (선택 사항)
+
+   ```typescript
+   import NextAuth from "next-auth";
+   import GoogleProvider from "next-auth/providers/google";
+
+   const handler = NextAuth({
+     providers: [
+       GoogleProvider({
+         clientId: process.env.GOOGLE_CLIENT_ID!,
+         clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+       }),
+     ],
+     callbacks: {
+       async signIn({ user }) {
+         // 회원 정보를 저장하는 로직 추가
+         // 예: DB에서 사용자를 확인하거나, 없으면 새로 생성
+         const userExists = await findUserInDatabase(user.email);
+         if (!userExists) {
+           await createUserInDatabase(user);
+         }
+         return true; // 로그인 성공 시 true 반환
+       },
+       async session({ session, token }) {
+         // 세션에 추가 정보 삽입
+         session.user.id = token.id;
+         return session;
+       },
+       async jwt({ token, user }) {
+         // JWT에 사용자 ID 추가
+         if (user) {
+           token.id = user.id;
+         }
+         return token;
+       },
+     },
+     secret: process.env.JWT_SECRET,
+   });
+
+   export { handler as GET, handler as POST };
+   ```
+
+## 직접 구현 vs. next-auth
+
+| 구분     | 직접 구현                  | next-auth 사용                  |
+| -------- | -------------------------- | ------------------------------- |
+| **장점** | 세부 로직을 직접 제어 가능 | 빠르고 간편하게 OAuth 구현 가능 |
+| **단점** | 코드 복잡도가 높아짐       | 복잡한 커스터마이징에는 부적합  |
