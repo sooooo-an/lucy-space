@@ -2,12 +2,7 @@
 
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { LOCAL_STORAGE_KEY } from "@/types/localStorage";
-import React, {
-  createContext,
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 
 type ThemeProviderType = {
   isDark: boolean;
@@ -27,25 +22,25 @@ export function ThemeProvider({ children }: Props) {
   const { getLocalStorage, setLocalStorage } = useLocalStorage();
   const [isDark, setDark] = useState(false);
 
-  useLayoutEffect(() => {
-    const osTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const savedTheme = getLocalStorage(LOCAL_STORAGE_KEY.IS_DARK);
-    setDark(savedTheme ?? osTheme);
-
-    const htmlEl = document.querySelector("html");
-    if (htmlEl) {
-      htmlEl.classList.toggle("dark", savedTheme ?? osTheme);
-    }
-  }, [getLocalStorage]);
+  const updateDarMode = useCallback(
+    (isDark: boolean) => {
+      const htmlEl = document.querySelector("html");
+      htmlEl?.classList.toggle("dark", isDark);
+      setLocalStorage(LOCAL_STORAGE_KEY.IS_DARK, isDark);
+    },
+    [setLocalStorage]
+  );
 
   useEffect(() => {
-    const htmlEl = document.querySelector("html");
-    htmlEl?.classList.toggle("dark", isDark);
-    setLocalStorage("isDark", isDark);
-  }, [isDark, setLocalStorage]);
+    const osTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = getLocalStorage(LOCAL_STORAGE_KEY.IS_DARK) ?? osTheme;
+    setDark(isDark);
+    updateDarMode(isDark);
+  }, [getLocalStorage, updateDarMode]);
 
   const toggleTheme = () => {
     setDark((prev) => !prev);
+    updateDarMode(!isDark);
   };
 
   return (
