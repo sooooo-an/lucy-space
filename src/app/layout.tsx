@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Open_Sans } from "next/font/google";
-import { IBM_Plex_Sans_KR } from "next/font/google";
+import localFont from "next/font/local";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import { ThemeProvider } from "@/contexts/ThemeContext";
@@ -11,13 +10,10 @@ export const metadata: Metadata = {
   description: "Lucy's Development Blog",
 };
 
-const openSans = Open_Sans({
-  subsets: ["latin"],
-});
-
-const IBMPlexSans = IBM_Plex_Sans_KR({
-  weight: "400",
-  subsets: ["latin"],
+const pretendard = localFont({
+  src: "./fonts/PretendardVariable.woff2",
+  display: "swap",
+  weight: "45 920",
 });
 
 export default function RootLayout({
@@ -26,13 +22,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${openSans.className} antialiased`}>
+    <html lang="en" className={`${pretendard.className} antialiased`}>
       <body>
         <ThemeProvider>
           <Header />
-          <main
-            className={`flex justify-center flex-1 ${IBMPlexSans.className}`}
-          >
+          <main className={`flex justify-center flex-1 `}>
             <div className="flex flex-col max-w-full lg:w-[900px] px-2">
               {children}
             </div>
