@@ -5,8 +5,8 @@ import Image from "next/image";
 export default function Logo() {
   return (
     <Link href="/">
-      <h1 className="font-bold text-2xl flex items-center gap-1">
-        <Image src="/images/logo.png" alt="Lucy.Space" width={40} height={40} />
+      <h1 className="font-bold text-lg uppercase flex items-center gap-1 text-text-primary mr-3">
+        <Image src="/images/logo.png" alt="Lucy.Space" width={30} height={30} />
         Lucy.Space.
       </h1>
     </Link>

@@ -6,12 +6,18 @@ export type UIColorType =
   | "secondary_outline"
   | "dander_full";
 
-export type InputData = {
-  label: string;
-  type: string;
-  name: string;
-  id: string;
-  required?: boolean;
-  placeholder?: string;
-  disabled?: boolean;
+type LinkType = {
+  type: "link";
+  link: string;
+  isBlank?: boolean;
 };
+
+type ButtonType = {
+  type: "button";
+  onClick: () => void;
+};
+
+export type IconButtonType = {
+  icon: React.ReactNode;
+  text?: string;
+} & (LinkType | ButtonType);

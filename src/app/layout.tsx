@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "../styles/globals.css";
 import localFont from "next/font/local";
 import Header from "@/components/common/Header";
-import Footer from "@/components/common/Footer";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 
 export const metadata: Metadata = {
@@ -22,18 +21,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${pretendard.className} antialiased`}>
-      <body>
+    <html
+      lang="en"
+      className={`${pretendard.className} antialiased text-sm lg:text-md`}
+    >
+      <body className="bg-background">
         <ThemeProvider>
           <Header />
-          <main className={`flex justify-center flex-1 `}>
-            <div className="flex flex-col max-w-full lg:w-[900px] px-2">
-              {children}
-            </div>
-          </main>
-          <Footer />
-          <div id="portal" />
         </ThemeProvider>
+        <main className="flex items-center justify-center">
+          <div className="container lg:flex">{children}</div>
+        </main>
       </body>
     </html>
   );

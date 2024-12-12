@@ -1,5 +1,8 @@
 import React from "react";
 import { Metadata } from "next";
+import Categories from "@/components/posts/Categories";
+import { CategoryData } from "@/types/post";
+import { getCategoryData } from "@/services/blog";
 
 export const metadata: Metadata = {
   title: {
@@ -12,10 +15,21 @@ export const metadata: Metadata = {
   },
 };
 
-export default function PostLayout({
+const ALL_POSTS: CategoryData = {
+  All: [{ title: "전체 게시물", path: "/" }],
+};
+
+export default async function PostLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <>{children}</>;
+  const categories = await getCategoryData();
+  return (
+    <>
+      <Categories categories={{ ...ALL_POSTS, ...categories }} />
+      <section className="p-2 block w-full">{children}</section>
+      {/* <div className="lg:flex-1 lg:px-2 w-full block px-2"></div> */}
+    </>
+  );
 }

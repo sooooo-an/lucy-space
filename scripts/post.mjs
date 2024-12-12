@@ -16,7 +16,7 @@ const extractFrontMatter = (content, fileName) => {
       .replace(NEW_LINE_REGEX, " ")
       .replace(SPECIAL_CHARACTERS_REGEX, "")
       .trim()
-      .substring(0, 100) + "...";
+      .substring(0, 65) + "...";
 
   const initialValue = {
     title: fileName,

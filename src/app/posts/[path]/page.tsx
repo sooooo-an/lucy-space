@@ -1,4 +1,5 @@
 import PostContent from "@/components/posts/PostContent";
+import PostRightPanel from "@/components/posts/PostRightPanel";
 import { getAllPosts, getPostData } from "@/services/blog";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -23,19 +24,24 @@ export async function generateMetadata({
 
 export default async function PostPage({ params: { path } }: Props) {
   const post = await getPostData(path);
-  const { thumbnail, title } = post;
+  const { thumbnail, title, contact } = post;
 
   return (
-    <article className="container px-2 flex flex-col">
-      <Image
-        className="rounded-lg w-full h-2/5 max-h-[600px]"
-        src={`/images/posts/${thumbnail}`}
-        alt={title}
-        width={960}
-        height={540}
-      />
-      <PostContent post={post} />
-    </article>
+    <div className="flex">
+      <article className="block w-full">
+        <Image
+          className="rounded-lg max-h-[600px] h-auto"
+          src={`/images/posts/${thumbnail}`}
+          alt={title}
+          width={960}
+          height={540}
+        />
+        <PostContent post={post} />
+      </article>
+      <aside className="basis-1/5 flex-shrink-0 hidden lg:block">
+        <PostRightPanel contact={contact} date={post.date} />
+      </aside>
+    </div>
   );
 }
 

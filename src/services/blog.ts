@@ -1,8 +1,9 @@
-import { Post, PostData } from "@/types/post";
+import { Post, PostData, CategoryData } from "@/types/post";
 import { readFile } from "fs/promises";
 import path from "path";
 
 const FRONT_MATTER_REGEX = /^---\n([\s\S]+?)\n---/;
+const CONTACT_REGEX = /### 목차([\s\S]*?)---/g;
 
 export const getAllPosts = async () => {
   const filePath = path.join(process.cwd(), "blog", "posts.json");
@@ -21,5 +22,21 @@ export const getPostData = async (fileName: string): Promise<PostData> => {
   }
 
   const content = await readFile(filePath, "utf-8");
-  return { ...post, content: content.replace(FRONT_MATTER_REGEX, "") };
+  const contact = CONTACT_REGEX.exec(content);
+
+  return {
+    ...post,
+    content: content.replace(FRONT_MATTER_REGEX, "").replace(CONTACT_REGEX, ""),
+    contact: contact?.[1] ?? "",
+  };
+};
+
+export const getCategoryData = async (): Promise<CategoryData> => {
+  const posts = await getAllPosts();
+
+  return posts.reduce((acc: CategoryData, { category, title, path }) => {
+    acc[category] = acc[category] || [];
+    acc[category].push({ title, path });
+    return acc;
+  }, {});
 };
