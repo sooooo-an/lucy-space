@@ -13,13 +13,13 @@ const ICON_BUTTONS: IconButtonType[] = [
     isBlank: true,
     text: "Github 바로가기",
   },
-  {
-    type: "link",
-    link: "https://github.com/sooooo-an",
-    icon: <PDFIcon />,
-    isBlank: true,
-    text: "이력서 바로가기",
-  },
+  // {
+  //   type: "link",
+  //   link: "https://github.com/sooooo-an",
+  //   icon: <PDFIcon />,
+  //   isBlank: true,
+  //   text: "이력서 바로가기",
+  // },
 ];
 
 const STYLE = `border-t border-t-border md:border-t-0 flex p-2 gap-1 md:block md:p-0`;

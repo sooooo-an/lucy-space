@@ -12,11 +12,13 @@ const MOBILE_NAV_STYLE =
 
 export default function Nav() {
   const [isOpen, setIsOpen] = useState(false);
+
+  const onToggle = () => setIsOpen(!isOpen);
   return (
     <>
       <button
         className="absolute right-3 md:hidden flex items-center text-text-primary"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={onToggle}
       >
         메뉴
         <DropdownIcon isOpen={isOpen} />

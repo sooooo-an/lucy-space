@@ -14,7 +14,7 @@ export default function CategoryItemList({ categories, category }: Props) {
         <li key={path} className="pb-1">
           <Link
             href={`/posts/${path}`}
-            className="font-normal text-sm block text-text-secondary truncate"
+            className="font-normal text-sm block text-text-secondary truncate hover:text-text-primary"
           >
             {title}
           </Link>

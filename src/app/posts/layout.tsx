@@ -28,8 +28,7 @@ export default async function PostLayout({
   return (
     <>
       <Categories categories={{ ...ALL_POSTS, ...categories }} />
-      <section className="p-2 block w-full">{children}</section>
-      {/* <div className="lg:flex-1 lg:px-2 w-full block px-2"></div> */}
+      <section className="p-2 block w-full ">{children}</section>
     </>
   );
 }

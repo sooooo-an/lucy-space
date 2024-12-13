@@ -2,42 +2,40 @@
 
 import { CategoryData } from "@/types/post";
 import React, { useState } from "react";
-import CategoryItemList from "./CategoryItemList";
-import FoldIcon from "../ui/icons/FoldIcon";
+
+import CategoryItem from "./CategoryItem";
+import FoldButton from "./FoldButton";
 
 type Props = {
   categories: CategoryData;
 };
 
 const WEB_CATEGORY_STYLE =
-  " lg:flex-shrink-0 lg:basis-1/5 lg:static lg:h-auto lg:bg-transparent";
-const MOBILE_CATEGORY_STYLE = "absolute h-full bg-background transition-all";
+  " lg:flex-shrink-0 lg:basis-1/5 lg:static lg:h-auto lg:bg-transparent lg:mt-0";
+const MOBILE_CATEGORY_STYLE =
+  "absolute bg-background transition-all top-0 bottom-0 mt-[4.2rem]";
 
 export default function Categories({ categories }: Props) {
-  const [isFolded, setIsOpen] = useState(false);
+  const [isFolded, setIsOpen] = useState(true);
+
+  const toggleFold = () => setIsOpen(!isFolded);
   return (
     <section
       className={`border-r border-r-border ${WEB_CATEGORY_STYLE} ${MOBILE_CATEGORY_STYLE} ${
         isFolded ? "-left-[259px]" : "left-0"
       }`}
     >
-      <ul className="p-3 lg:sticky lg:top-20 static">
+      <ul className="p-3 lg:sticky lg:top-20 static ">
         {Object.keys(categories).map((category) => (
-          <li
+          <CategoryItem
+            categories={categories}
+            category={category}
             key={category}
-            className="font-semibold mb-4 text-sm text-text-primary"
-          >
-            <p className="pb-1">{category}</p>
-            <CategoryItemList categories={categories} category={category} />
-          </li>
+          />
         ))}
       </ul>
-      <button
-        className="absolute -right-6 bg-text-secondary/90 h-20 w-6 rounded-tr-2xl rounded-br-2xl top-1/2 -translate-y-1/2  flex items-center justify-center text-white lg:hidden"
-        onClick={() => setIsOpen(!isFolded)}
-      >
-        <FoldIcon isFolded={isFolded} />
-      </button>
+
+      <FoldButton onToggle={toggleFold} isFolded={isFolded} />
     </section>
   );
 }

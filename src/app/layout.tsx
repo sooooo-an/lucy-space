@@ -30,7 +30,7 @@ export default function RootLayout({
           <Header />
         </ThemeProvider>
         <main className="flex items-center justify-center">
-          <div className="container lg:flex">{children}</div>
+          <div className="container flex ">{children}</div>
         </main>
       </body>
     </html>
