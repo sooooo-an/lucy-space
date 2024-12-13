@@ -21,39 +21,38 @@ category: Typescript
 
 ```typescript
 const BOOKMARK_CATEGORIES = {
-  CHANNEL: "channel",
-  PROJECT: "project",
-  DIRECT_MESSAGE: "dm",
-} as const;
+  CHANNEL: 'channel',
+  PROJECT: 'project',
+  DIRECT_MESSAGE: 'dm',
+} as const
 
-type BookmarkCategoriesType =
-  (typeof BOOKMARK_CATEGORIES)[keyof typeof BOOKMARK_CATEGORIES];
+type BookmarkCategoriesType = (typeof BOOKMARK_CATEGORIES)[keyof typeof BOOKMARK_CATEGORIES]
 
 interface BookmarkChannelValuesType {
-  ch_id: string;
-  ch_name: string;
-  msg_id: string;
-  ws_id: string;
-  ws_name: string;
-  user_id: string;
+  ch_id: string
+  ch_name: string
+  msg_id: string
+  ws_id: string
+  ws_name: string
+  user_id: string
 }
 
 interface BookmarkProjectValuesType {
-  log_id: string;
-  prj_id: string;
-  prj_name: string;
-  ws_id: string;
-  ws_name: string;
-  assign_user_ids: string[];
+  log_id: string
+  prj_id: string
+  prj_name: string
+  ws_id: string
+  ws_name: string
+  assign_user_ids: string[]
 }
 
 interface BookmarkDirectMessageValuesType {
-  contents_id: string;
-  members: string[];
-  room_id: string;
-  room_name: string;
-  room_type: string;
-  user_id: string;
+  contents_id: string
+  members: string[]
+  room_id: string
+  room_name: string
+  room_type: string
+  user_id: string
 }
 ```
 
@@ -63,39 +62,36 @@ interface BookmarkDirectMessageValuesType {
 
 ```typescript
 export interface BookmarkApiType {
-  bookmark_id: string;
-  bookmark_type: BookmarkCategoriesType;
-  values:
-    | BookmarkChannelValuesType
-    | BookmarkProjectValuesType
-    | BookmarkDirectMessageValuesType;
+  bookmark_id: string
+  bookmark_type: BookmarkCategoriesType
+  values: BookmarkChannelValuesType | BookmarkProjectValuesType | BookmarkDirectMessageValuesType
 }
 
 const apiResponse: BookmarkApiType = {
-  bookmark_id: "1",
+  bookmark_id: '1',
   bookmark_type: BOOKMARK_CATEGORIES.CHANNEL,
   values: {
-    ch_id: "123",
-    ch_name: "123",
-    msg_id: "123",
-    ws_id: "123",
-    ws_name: "123",
-    user_id: "123",
+    ch_id: '123',
+    ch_name: '123',
+    msg_id: '123',
+    ws_id: '123',
+    ws_name: '123',
+    user_id: '123',
   },
-};
+}
 
 const getName = (item: BookmarkApiType) => {
   switch (item.bookmark_type) {
     case BOOKMARK_CATEGORIES.CHANNEL:
-      return (item.values as BookmarkChannelValuesType).ch_name;
+      return (item.values as BookmarkChannelValuesType).ch_name
     case BOOKMARK_CATEGORIES.PROJECT:
-      return (item.values as BookmarkProjectValuesType).prj_name;
+      return (item.values as BookmarkProjectValuesType).prj_name
     case BOOKMARK_CATEGORIES.DIRECT_MESSAGE:
-      return (item.values as BookmarkDirectMessageValuesType).room_name;
+      return (item.values as BookmarkDirectMessageValuesType).room_name
   }
-};
+}
 
-getName(apiResponse);
+getName(apiResponse)
 ```
 
 `getName` 통해 자식 컴포넌트에 보여주는 코드이다. `getName` 함수 안의 단언식을 제거하면 아래의 에러가 찍히는 것을 볼 수 있다. 각 카테고리가 어떤 타입을 가지고 있는 지 명시되어 있지 않기 때문에 생기는 이슈이다 \
@@ -110,38 +106,35 @@ getName(apiResponse);
 
 ```typescript
 interface BookmarkChannelApiType {
-  bookmark_id: string;
-  bookmark_type: typeof BOOKMARK_CATEGORIES.CHANNEL;
-  values: BookmarkChannelValuesType;
+  bookmark_id: string
+  bookmark_type: typeof BOOKMARK_CATEGORIES.CHANNEL
+  values: BookmarkChannelValuesType
 }
 
 interface BookmarkProjectApiType {
-  bookmark_id: string;
-  bookmark_type: typeof BOOKMARK_CATEGORIES.PROJECT;
-  values: BookmarkProjectValuesType;
+  bookmark_id: string
+  bookmark_type: typeof BOOKMARK_CATEGORIES.PROJECT
+  values: BookmarkProjectValuesType
 }
 
 interface BookmarkDmApiType {
-  bookmark_id: string;
-  bookmark_type: typeof BOOKMARK_CATEGORIES.DIRECT_MESSAGE;
-  values: BookmarkDirectMessageValuesType;
+  bookmark_id: string
+  bookmark_type: typeof BOOKMARK_CATEGORIES.DIRECT_MESSAGE
+  values: BookmarkDirectMessageValuesType
 }
 
-type BookmarkApiType =
-  | BookmarkChannelApiType
-  | BookmarkProjectApiType
-  | BookmarkDmApiType;
+type BookmarkApiType = BookmarkChannelApiType | BookmarkProjectApiType | BookmarkDmApiType
 
 const getName = (item: BookmarkApiType) => {
   switch (item.bookmark_type) {
     case BOOKMARK_CATEGORIES.CHANNEL:
-      return item.values.ch_name;
+      return item.values.ch_name
     case BOOKMARK_CATEGORIES.PROJECT:
-      return item.values.prj_name;
+      return item.values.prj_name
     case BOOKMARK_CATEGORIES.DIRECT_MESSAGE:
-      return item.values.room_name;
+      return item.values.room_name
   }
-};
+}
 ```
 
 `bookmark_type`과 `values`의 링크를 만들어준다면, 단언식을 사용하지 않더라도 타입스크립트를 사용할 수 있게 된다. 타입 단언식은 개발자가 강제로 타입을 지정하는 것으로, 타입 체커에게 오류를 무시하라는 것과 같다.

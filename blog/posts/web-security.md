@@ -73,7 +73,7 @@ SOP(Same Origin Policy)은 클라이언트에서 요청을 보냈을 때, 다른
   <input type="hidden" name="toAccount" value="attackerAccount" />
 </form>
 <script>
-  document.forms[0].submit(); // 페이지를 열면 자동으로 폼 제출
+  document.forms[0].submit() // 페이지를 열면 자동으로 폼 제출
 </script>
 ```
 

@@ -1,23 +1,23 @@
-"use client";
+'use client'
 
-import React, { useState } from "react";
-import Menu from "../ui/Menu";
-import HeaderSubMenu from "./HeaderSubMenu";
-import DropdownIcon from "../ui/icons/DropdownIcon";
+import React, { useState } from 'react'
+import Menu from '../ui/Menu'
+import HeaderSubMenu from './HeaderSubMenu'
+import DropdownIcon from '../ui/icons/DropdownIcon'
 
 const WEB_NAV_STYLE =
-  "md:flex  md:block md:bg-transparent md:static md:shadow-none md:rounded-none md:px-0 md:border-0";
+  'md:flex  md:block md:bg-transparent md:static md:shadow-none md:rounded-none md:px-0 md:border-0'
 const MOBILE_NAV_STYLE =
-  "absolute top-12 right-3 bg-background shadow-md rounded-md px-2 border border-border";
+  'absolute top-12 right-3 bg-background shadow-md rounded-md px-2 border border-border'
 
 export default function Nav() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
-  const onToggle = () => setIsOpen(!isOpen);
+  const onToggle = () => setIsOpen(!isOpen)
   return (
     <>
       <button
-        className="absolute right-3 md:hidden flex items-center text-text-primary"
+        className="absolute right-3 flex items-center text-text-primary md:hidden"
         onClick={onToggle}
       >
         메뉴
@@ -25,13 +25,13 @@ export default function Nav() {
       </button>
 
       <div
-        className={`items-center justify-between flex-1  ${
-          isOpen ? "block" : "hidden"
+        className={`flex-1 items-center justify-between ${
+          isOpen ? 'block' : 'hidden'
         } ${MOBILE_NAV_STYLE} ${WEB_NAV_STYLE}`}
       >
         <Menu />
         <HeaderSubMenu />
       </div>
     </>
-  );
+  )
 }

@@ -1,26 +1,26 @@
-"use client";
+'use client'
 
-import React from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import React from 'react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 interface MenuType {
-  name: string;
-  href: string;
+  name: string
+  href: string
 }
 
 const MENUS: MenuType[] = [
   {
-    name: "블로그",
-    href: "/posts",
+    name: '블로그',
+    href: '/posts',
   },
-];
+]
 
 const RIGHT_LINE_STYLE =
-  "before:absolute before:w-[1px] before:h-4 before:bg-gray-500 before:left-0 before:top-1 before:hidden md:before:block";
+  'before:absolute before:w-[1px] before:h-4 before:bg-gray-500 before:left-0 before:top-1 before:hidden md:before:block'
 
 export default function Menu() {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   return (
     <nav className={`relative ${RIGHT_LINE_STYLE} py-2 text-center md:py-0`}>
@@ -29,9 +29,7 @@ export default function Menu() {
           <li key={href}>
             <Link
               href={href}
-              className={`${
-                pathname.startsWith(href) && "text-primary font-semibold"
-              }`}
+              className={`${pathname.startsWith(href) && 'font-semibold text-primary'}`}
             >
               {name}
             </Link>
@@ -39,5 +37,5 @@ export default function Menu() {
         ))}
       </ul>
     </nav>
-  );
+  )
 }

@@ -1,10 +1,10 @@
-import React from "react";
-import { MdDarkMode, MdLightMode } from "react-icons/md";
+import React from 'react'
+import { MdDarkMode, MdLightMode } from 'react-icons/md'
 
 type Props = {
-  isDarkmode: boolean;
-};
+  isDarkmode: boolean
+}
 
 export default function ThemeIcon({ isDarkmode }: Props) {
-  return isDarkmode ? <MdLightMode /> : <MdDarkMode />;
+  return isDarkmode ? <MdLightMode /> : <MdDarkMode />
 }

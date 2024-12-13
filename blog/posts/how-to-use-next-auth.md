@@ -81,19 +81,19 @@ OAuth 플로우를 Next.js로 구현해보자
 1. `/api/auth/login/route.ts`에 Google 인증 페이지로 리디렉션하는 코드를 구현해보자.
 
    ```typescript
-   import { NextResponse } from "next/server";
+   import { NextResponse } from 'next/server'
 
    export async function GET() {
-     const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
+     const rootUrl = 'https://accounts.google.com/o/oauth2/v2/auth'
      const options = {
        redirect_uri: process.env.GOOGLE_REDIRECT_URL!,
        client_id: process.env.GOOGLE_CLIENT_ID!,
-       response_type: "code",
-       scope: "email profile",
-     };
+       response_type: 'code',
+       scope: 'email profile',
+     }
 
-     const qs = new URLSearchParams(options);
-     return NextResponse.redirect(`${rootUrl}?${qs.toString()}`);
+     const qs = new URLSearchParams(options)
+     return NextResponse.redirect(`${rootUrl}?${qs.toString()}`)
    }
    ```
 
@@ -102,37 +102,34 @@ OAuth 플로우를 Next.js로 구현해보자
 2. 그럼 이제 `/api/auth/callback` 코드를 구현해보자 `code`를 이용하여 `access_token`을 받아오는 로직을 구현해보자
 
    ```typescript
-   import { NextRequest, NextResponse } from "next/server";
+   import { NextRequest, NextResponse } from 'next/server'
 
    export async function GET(req: NextRequest) {
-     if (!req.nextUrl.searchParams.has("code")) {
-       throw new Error("No code found in query string");
+     if (!req.nextUrl.searchParams.has('code')) {
+       throw new Error('No code found in query string')
      }
 
      try {
-       const code = req.nextUrl.searchParams.get("code");
-       const tokenResponse = await fetch(
-         "https://oauth2.googleapis.com/token",
-         {
-           method: "POST",
-           body: JSON.stringify({
-             code,
-             client_id: process.env.GOOGLE_CLIENT_ID!,
-             client_secret: process.env.GOOGLE_CLIENT_SECRET!,
-             redirect_uri: process.env.GOOGLE_REDIRECT_URL!,
-             grant_type: "authorization_code",
-           }),
-           headers: { "Content-Type": "application/json" },
-         }
-       );
+       const code = req.nextUrl.searchParams.get('code')
+       const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
+         method: 'POST',
+         body: JSON.stringify({
+           code,
+           client_id: process.env.GOOGLE_CLIENT_ID!,
+           client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+           redirect_uri: process.env.GOOGLE_REDIRECT_URL!,
+           grant_type: 'authorization_code',
+         }),
+         headers: { 'Content-Type': 'application/json' },
+       })
 
-       const data = await tokenResponse.json();
+       const data = await tokenResponse.json()
 
-       return NextResponse.json({ data });
+       return NextResponse.json({ data })
      } catch (error) {
-       console.error("Error exchanging token:", JSON.stringify(error, null, 2));
+       console.error('Error exchanging token:', JSON.stringify(error, null, 2))
        if (error instanceof Error) {
-         throw error;
+         throw error
        }
      }
    }
@@ -141,49 +138,43 @@ OAuth 플로우를 Next.js로 구현해보자
 3. 이 `access_token`을 이용하여 회원정보를 불러오는 로직을 추가해보자. 현재는 포함되어 있지 않지만, DB에서 회원정보를 찾은 후, 존재하지 않는 이메일이라면 회원으로 만들어주는 로직도 추가해볼 수 있다.
 
    ```typescript
-   import { NextRequest, NextResponse } from "next/server";
+   import { NextRequest, NextResponse } from 'next/server'
 
    export async function GET(req: NextRequest) {
-     if (!req.nextUrl.searchParams.has("code")) {
-       throw new Error("No code found in query string");
+     if (!req.nextUrl.searchParams.has('code')) {
+       throw new Error('No code found in query string')
      }
 
      try {
-       const code = req.nextUrl.searchParams.get("code");
-       const tokenResponse = await fetch(
-         "https://oauth2.googleapis.com/token",
-         {
-           method: "POST",
-           body: JSON.stringify({
-             code,
-             client_id: process.env.GOOGLE_CLIENT_ID!,
-             client_secret: process.env.GOOGLE_CLIENT_SECRET!,
-             redirect_uri: process.env.GOOGLE_REDIRECT_URL!,
-             grant_type: "authorization_code",
-           }),
-           headers: { "Content-Type": "application/json" },
-         }
-       );
+       const code = req.nextUrl.searchParams.get('code')
+       const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
+         method: 'POST',
+         body: JSON.stringify({
+           code,
+           client_id: process.env.GOOGLE_CLIENT_ID!,
+           client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+           redirect_uri: process.env.GOOGLE_REDIRECT_URL!,
+           grant_type: 'authorization_code',
+         }),
+         headers: { 'Content-Type': 'application/json' },
+       })
 
-       const data = await tokenResponse.json();
+       const data = await tokenResponse.json()
 
-       const userInfoResponse = await fetch(
-         "https://www.googleapis.com/oauth2/v2/userinfo",
-         {
-           headers: { Authorization: `Bearer ${data.access_token}` },
-         }
-       );
+       const userInfoResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+         headers: { Authorization: `Bearer ${data.access_token}` },
+       })
 
-       const userInfo = await userInfoResponse.json();
-       console.log(userInfo);
+       const userInfo = await userInfoResponse.json()
+       console.log(userInfo)
 
-       const response = NextResponse.redirect("http://localhost:3000");
+       const response = NextResponse.redirect('http://localhost:3000')
 
-       return response;
+       return response
      } catch (error) {
-       console.error("Error exchanging token:", JSON.stringify(error, null, 2));
+       console.error('Error exchanging token:', JSON.stringify(error, null, 2))
        if (error instanceof Error) {
-         throw error;
+         throw error
        }
      }
    }
@@ -192,53 +183,47 @@ OAuth 플로우를 Next.js로 구현해보자
 4. 지금까지 로직을 보면 로그인은 되었으나 로그인이 유지가 되지는 않는다. jwt 토큰을 이용하여 토큰을 쿠키에 저장해주는 로직을 구현해보자.
 
    ```typescript
-   import { NextRequest, NextResponse } from "next/server";
-   import jwt from "jsonwebtoken";
+   import { NextRequest, NextResponse } from 'next/server'
+   import jwt from 'jsonwebtoken'
 
    export async function GET(req: NextRequest) {
-     if (!req.nextUrl.searchParams.has("code")) {
-       throw new Error("No code found in query string");
+     if (!req.nextUrl.searchParams.has('code')) {
+       throw new Error('No code found in query string')
      }
 
      try {
-       const code = req.nextUrl.searchParams.get("code");
-       const tokenResponse = await fetch(
-         "https://oauth2.googleapis.com/token",
-         {
-           method: "POST",
-           body: JSON.stringify({
-             code,
-             client_id: process.env.GOOGLE_CLIENT_ID!,
-             client_secret: process.env.GOOGLE_CLIENT_SECRET!,
-             redirect_uri: process.env.GOOGLE_REDIRECT_URL!,
-             grant_type: "authorization_code",
-           }),
-           headers: { "Content-Type": "application/json" },
-         }
-       );
+       const code = req.nextUrl.searchParams.get('code')
+       const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
+         method: 'POST',
+         body: JSON.stringify({
+           code,
+           client_id: process.env.GOOGLE_CLIENT_ID!,
+           client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+           redirect_uri: process.env.GOOGLE_REDIRECT_URL!,
+           grant_type: 'authorization_code',
+         }),
+         headers: { 'Content-Type': 'application/json' },
+       })
 
-       const data = await tokenResponse.json();
+       const data = await tokenResponse.json()
 
-       const userInfoResponse = await fetch(
-         "https://www.googleapis.com/oauth2/v2/userinfo",
-         {
-           headers: { Authorization: `Bearer ${data.access_token}` },
-         }
-       );
+       const userInfoResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+         headers: { Authorization: `Bearer ${data.access_token}` },
+       })
 
-       const userInfo = await userInfoResponse.json();
+       const userInfo = await userInfoResponse.json()
        const token = jwt.sign(userInfo, process.env.JWT_SECRET!, {
-         expiresIn: "1h",
-       });
+         expiresIn: '1h',
+       })
 
-       const response = NextResponse.redirect("http://localhost:3000");
-       response.cookies.set("token", token, { httpOnly: true });
+       const response = NextResponse.redirect('http://localhost:3000')
+       response.cookies.set('token', token, { httpOnly: true })
 
-       return response;
+       return response
      } catch (error) {
-       console.error("Error exchanging token:", JSON.stringify(error, null, 2));
+       console.error('Error exchanging token:', JSON.stringify(error, null, 2))
        if (error instanceof Error) {
-         throw error;
+         throw error
        }
      }
    }
@@ -247,21 +232,21 @@ OAuth 플로우를 Next.js로 구현해보자
 5. 이제 `/api/auth/me` 라우터를 만들어서 이 쿠키가 있는지 확인 한 뒤 회원정보를 가지고 오는 로직을 구현하여 클라이언트에서 사용할 수 있게 한다.
 
    ```typescript
-   import { NextRequest, NextResponse } from "next/server";
-   import jwt from "jsonwebtoken";
+   import { NextRequest, NextResponse } from 'next/server'
+   import jwt from 'jsonwebtoken'
 
    export async function GET(req: NextRequest) {
-     const token = req.cookies.get("token")?.value;
+     const token = req.cookies.get('token')?.value
 
      if (!token) {
-       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
      }
 
      try {
-       const user = jwt.verify(token, process.env.JWT_SECRET!);
-       return NextResponse.json(user);
+       const user = jwt.verify(token, process.env.JWT_SECRET!)
+       return NextResponse.json(user)
      } catch (error) {
-       return NextResponse.json({ message: "Invalid token" }, { status: 401 });
+       return NextResponse.json({ message: 'Invalid token' }, { status: 401 })
      }
    }
    ```
@@ -287,8 +272,8 @@ next-auth는 OAuth를 포함한 다양한 인증 방식을 추상화하여 간�
    next-auth의 API 엔드포인트를 설정하기 위해 파일을 생성한다. `[...]`는 동적 라우팅으로, 이 설정을 통해 `api/auth/*` 경로를 자동으로 처리할 수 있게 된다.
 
    ```typescript
-   import NextAuth from "next-auth";
-   import GoogleProvider from "next-auth/providers/google";
+   import NextAuth from 'next-auth'
+   import GoogleProvider from 'next-auth/providers/google'
 
    const handler = NextAuth({
      providers: [
@@ -298,9 +283,9 @@ next-auth는 OAuth를 포함한 다양한 인증 방식을 추상화하여 간�
        }),
      ],
      secret: process.env.JWT_SECRET,
-   });
+   })
 
-   export { handler as GET, handler as POST };
+   export { handler as GET, handler as POST }
    ```
 
 4. `SessionProvider`로 로그인 상태 유지
@@ -327,8 +312,8 @@ next-auth는 OAuth를 포함한 다양한 인증 방식을 추상화하여 간�
 5. 회원 정보 DB 저장 로직 추가 (선택 사항)
 
    ```typescript
-   import NextAuth from "next-auth";
-   import GoogleProvider from "next-auth/providers/google";
+   import NextAuth from 'next-auth'
+   import GoogleProvider from 'next-auth/providers/google'
 
    const handler = NextAuth({
      providers: [
@@ -341,29 +326,29 @@ next-auth는 OAuth를 포함한 다양한 인증 방식을 추상화하여 간�
        async signIn({ user }) {
          // 회원 정보를 저장하는 로직 추가
          // 예: DB에서 사용자를 확인하거나, 없으면 새로 생성
-         const userExists = await findUserInDatabase(user.email);
+         const userExists = await findUserInDatabase(user.email)
          if (!userExists) {
-           await createUserInDatabase(user);
+           await createUserInDatabase(user)
          }
-         return true; // 로그인 성공 시 true 반환
+         return true // 로그인 성공 시 true 반환
        },
        async session({ session, token }) {
          // 세션에 추가 정보 삽입
-         session.user.id = token.id;
-         return session;
+         session.user.id = token.id
+         return session
        },
        async jwt({ token, user }) {
          // JWT에 사용자 ID 추가
          if (user) {
-           token.id = user.id;
+           token.id = user.id
          }
-         return token;
+         return token
        },
      },
      secret: process.env.JWT_SECRET,
-   });
+   })
 
-   export { handler as GET, handler as POST };
+   export { handler as GET, handler as POST }
    ```
 
 ## 직접 구현 vs. next-auth

@@ -1,47 +1,47 @@
-"use client";
+'use client'
 
-import useLocalStorage from "@/hooks/useLocalStorage";
-import { LOCAL_STORAGE_KEY } from "@/types/localStorage";
-import React, { createContext, useCallback, useEffect, useState } from "react";
+import useLocalStorage from '@/hooks/useLocalStorage'
+import { LOCAL_STORAGE_KEY } from '@/types/localStorage'
+import React, { createContext, useCallback, useEffect, useState } from 'react'
 
 type ThemeProviderType = {
-  isDark: boolean;
-  toggleTheme: () => void;
-};
+  isDark: boolean
+  toggleTheme: () => void
+}
 
 const ThemeContext = createContext<ThemeProviderType>({
   isDark: false,
   toggleTheme: () => {},
-});
+})
 
 type Props = {
-  children: React.ReactNode;
-};
+  children: React.ReactNode
+}
 
 export function ThemeProvider({ children }: Props) {
-  const { getLocalStorage, setLocalStorage } = useLocalStorage();
-  const [isDark, setDark] = useState(false);
+  const { getLocalStorage, setLocalStorage } = useLocalStorage()
+  const [isDark, setDark] = useState(false)
 
   const updateDarMode = useCallback(
     (isDark: boolean) => {
-      const htmlEl = document.querySelector("html");
-      htmlEl?.classList.toggle("dark", isDark);
-      setLocalStorage(LOCAL_STORAGE_KEY.IS_DARK, isDark);
+      const htmlEl = document.querySelector('html')
+      htmlEl?.classList.toggle('dark', isDark)
+      setLocalStorage(LOCAL_STORAGE_KEY.IS_DARK, isDark)
     },
     [setLocalStorage]
-  );
+  )
 
   useEffect(() => {
-    const osTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const isDark = getLocalStorage(LOCAL_STORAGE_KEY.IS_DARK) ?? osTheme;
-    setDark(isDark);
-    updateDarMode(isDark);
-  }, [getLocalStorage, updateDarMode]);
+    const osTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isDark = getLocalStorage(LOCAL_STORAGE_KEY.IS_DARK) ?? osTheme
+    setDark(isDark)
+    updateDarMode(isDark)
+  }, [getLocalStorage, updateDarMode])
 
   const toggleTheme = () => {
-    setDark((prev) => !prev);
-    updateDarMode(!isDark);
-  };
+    setDark((prev) => !prev)
+    updateDarMode(!isDark)
+  }
 
   return (
     <ThemeContext.Provider
@@ -52,13 +52,13 @@ export function ThemeProvider({ children }: Props) {
     >
       {children}
     </ThemeContext.Provider>
-  );
+  )
 }
 
 export const useTheme = () => {
-  const context = React.useContext(ThemeContext);
+  const context = React.useContext(ThemeContext)
   if (!context) {
-    throw new Error("useTheme must be used within a ThemeProvider");
+    throw new Error('useTheme must be used within a ThemeProvider')
   }
-  return context;
-};
+  return context
+}

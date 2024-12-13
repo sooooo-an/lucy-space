@@ -1,13 +1,13 @@
-import React from "react";
-import { createPortal } from "react-dom";
+import React from 'react'
+import { createPortal } from 'react-dom'
 
 type Props = {
-  children: React.ReactNode;
-};
+  children: React.ReactNode
+}
 
 export default function PortalModal({ children }: Props) {
-  if (typeof window === "undefined") return null;
+  if (typeof window === 'undefined') return null
 
-  const node = document.getElementById("portal") as Element;
-  return createPortal(children, node);
+  const node = document.getElementById('portal') as Element
+  return createPortal(children, node)
 }

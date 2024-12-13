@@ -26,7 +26,7 @@ body {
     --color-border: 200 200 200;
   }
 
-  :root[class~="dark"] {
+  :root[class~='dark'] {
     --color-primary: 77 121 204;
     --color-text-primary: 255 255 255;
     --color-background: 31 41 55;

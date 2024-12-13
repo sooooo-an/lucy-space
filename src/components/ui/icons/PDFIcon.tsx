@@ -1,5 +1,5 @@
-import { PiFilePdfLight } from "react-icons/pi";
+import { PiFilePdfLight } from 'react-icons/pi'
 
 export default function PDFIcon() {
-  return <PiFilePdfLight />;
+  return <PiFilePdfLight />
 }

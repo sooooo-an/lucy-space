@@ -3,19 +3,19 @@ const nextConfig = {
   redirects: async () => {
     return [
       {
-        source: "/",
-        destination: "/posts",
+        source: '/',
+        destination: '/posts',
         permanent: true,
       },
-    ];
+    ]
   },
   images: {
     remotePatterns: [
       {
-        hostname: "res.cloudinary.com",
+        hostname: 'res.cloudinary.com',
       },
     ],
   },
-};
+}
 
-export default nextConfig;
+export default nextConfig

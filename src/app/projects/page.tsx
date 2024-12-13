@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 export default function ProjectsPage() {
   return (
@@ -7,5 +7,5 @@ export default function ProjectsPage() {
       <li>Calculator</li>
       <li>Calculator</li>
     </ul>
-  );
+  )
 }

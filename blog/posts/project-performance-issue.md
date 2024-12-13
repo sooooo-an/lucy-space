@@ -36,18 +36,16 @@ RxJS는 비동기 상태를 효율적으로 관리할 수 있다는 장점이 �
 
 ```typescript
 this.tabViewerSub = this.activatedRoute.paramMap.subscribe((paramMap) => {
-  this.isTabViewer = !!paramMap.get(TAB_PARAM_ID);
+  this.isTabViewer = !!paramMap.get(TAB_PARAM_ID)
   if (this.isTabViewer) {
-    this.viewType = "tab";
+    this.viewType = 'tab'
   } else {
-    const projectViewSub = this.projectService
-      .$getProjectView()
-      .subscribe((data) => {
-        this.viewType = data.view;
-      });
-    this.subscription.add(projectViewSub);
+    const projectViewSub = this.projectService.$getProjectView().subscribe((data) => {
+      this.viewType = data.view
+    })
+    this.subscription.add(projectViewSub)
   }
-});
+})
 ```
 
 - 수정 코드
