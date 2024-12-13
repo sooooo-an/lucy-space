@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { CategoryData } from "@/types/post";
+import { usePathname } from "next/navigation";
 
 type Props = {
   categories: CategoryData;
@@ -8,13 +9,16 @@ type Props = {
 };
 
 export default function CategoryItemList({ categories, category }: Props) {
+  const pathname = usePathname();
   return (
     <ul>
       {categories[category].map(({ path, title }) => (
-        <li key={path} className="pb-1">
+        <li key={path} className="pb-1 ">
           <Link
             href={`/posts/${path}`}
-            className="font-normal text-sm block text-text-secondary truncate hover:text-text-primary"
+            className={`font-normal text-sm block truncate text-text-secondary hover:text-text-primary ${
+              pathname === `/posts/${path}` ? "font-semibold" : ""
+            }`}
           >
             {title}
           </Link>

@@ -11,9 +11,9 @@ type Props = {
 };
 
 const WEB_CATEGORY_STYLE =
-  " lg:flex-shrink-0 lg:basis-1/5 lg:static lg:h-auto lg:bg-transparent lg:mt-0";
+  "lg:flex-shrink-0 lg:w-1/5 lg:static lg:h-auto lg:bg-transparent lg:mt-0";
 const MOBILE_CATEGORY_STYLE =
-  "absolute bg-background transition-all top-0 bottom-0 mt-[4.2rem]";
+  "absolute bg-background transition-all top-0 bottom-0 mt-[4.2rem] z-10";
 
 export default function Categories({ categories }: Props) {
   const [isFolded, setIsOpen] = useState(true);
@@ -21,11 +21,11 @@ export default function Categories({ categories }: Props) {
   const toggleFold = () => setIsOpen(!isFolded);
   return (
     <section
-      className={`border-r border-r-border ${WEB_CATEGORY_STYLE} ${MOBILE_CATEGORY_STYLE} ${
-        isFolded ? "-left-[259px]" : "left-0"
+      className={`border-r border-r-border ${WEB_CATEGORY_STYLE} ${MOBILE_CATEGORY_STYLE}  ${
+        isFolded ? "-left-[262px]" : "left-0"
       }`}
     >
-      <ul className="p-3 lg:sticky lg:top-20 static ">
+      <ul className="p-3 lg:sticky lg:top-20 static">
         {Object.keys(categories).map((category) => (
           <CategoryItem
             categories={categories}

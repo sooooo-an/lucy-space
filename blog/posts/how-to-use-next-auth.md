@@ -6,8 +6,8 @@ category: Next.js
 
 ### 목차
 
-[What is OAuth](#what-is-oauth) \
-[OAuth Flow](#oauth-flow) \
+[What is OAuth](#what-is-oauth)
+[OAuth Flow](#oauth-flow)
 [Next.js 코드 예시: 직접 구현하기](#nextjs-코드-예시-직접-구현하기)
 [Next.js 코드 예시: next-auth 라이브러리로 구현하기](#nextjs-코드-예시-next-auth-라이브러리로-구현하기)
 [직접 구현 vs. next-auth](#직접-구현-vs-next-auth)

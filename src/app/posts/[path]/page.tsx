@@ -38,7 +38,7 @@ export default async function PostPage({ params: { path } }: Props) {
         />
         <PostContent post={post} />
       </article>
-      <aside className="basis-1/5 flex-shrink-0 hidden lg:block">
+      <aside className="flex-shrink-0 hidden xl:block w-1/4">
         <PostRightPanel contact={contact} date={post.date} />
       </aside>
     </div>

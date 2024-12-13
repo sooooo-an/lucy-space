@@ -6,8 +6,8 @@ category: Web Security
 
 ### 목차
 
-[CORS](#cors) \
-[CSRF](#csrf) \
+[CORS](#cors)
+[CSRF](#csrf)
 [Cross-Site Script Attacks](#cross-site-script-attacks)
 
 ---

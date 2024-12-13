@@ -13,8 +13,8 @@ export default function PostRightPanel({ date, contact }: Props) {
       <time className="text-sm text-gray-400">created: {parseDate(date)}</time>
       {contact && (
         <div className="pt-8">
-          <p className="font-bold text-text-primary">목차</p>
-          <MarkdownViewer content={contact} />
+          <p className="font-bold text-text-primary mb-2">목차</p>
+          <MarkdownViewer content={contact} className="contact" />
         </div>
       )}
     </div>

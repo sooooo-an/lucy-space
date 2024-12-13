@@ -1,6 +1,5 @@
 import React from "react";
 import GithubIcon from "./icons/GithubIcon";
-import PDFIcon from "./icons/PDFIcon";
 import ThemeButton from "./ThemeButton";
 import IconButton from "./IconButton";
 import { IconButtonType } from "@/types/ui";

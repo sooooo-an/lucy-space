@@ -7,18 +7,22 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import Image from "next/image";
 import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import rehypeRaw from "rehype-raw";
-import rehypeSanitize from "rehype-sanitize";
 import "../../styles/github-markdown.css";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 type Props = {
   content: string;
+  className?: string;
 };
 
-export default function MarkdownViewer({ content }: Props) {
+export default function MarkdownViewer({ content, className = "" }: Props) {
   return (
     <div className="markdown-body">
       <Markdown
-        rehypePlugins={[remarkGfm, rehypeRaw, rehypeSanitize]}
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeSlug, rehypeAutolinkHeadings, rehypeRaw]}
+        className={className}
         components={{
           code(props) {
             const { children, className, ...rest } = props;
@@ -30,7 +34,6 @@ export default function MarkdownViewer({ content }: Props) {
                 language={match[1]}
                 style={oneDark}
                 ref={undefined}
-                customStyle={{ overflowX: "auto" }}
               >
                 {String(children).replace(/\n$/, "")}
               </SyntaxHighlighter>
