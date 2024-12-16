@@ -8,6 +8,9 @@ import { GoogleAnalytics } from '@next/third-parties/google'
 export const metadata: Metadata = {
   title: 'Lucy.Space.',
   description: "Lucy's Development Blog",
+  icons: {
+    icon: '/favicon.ico',
+  },
 }
 
 const pretendard = localFont({
