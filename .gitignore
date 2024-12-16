@@ -36,4 +36,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-/blog/posts.json
+/data/blog/posts.json
