@@ -1,4 +1,4 @@
-import PostCardList from '@/components/posts/PostCardList'
+import PostCardList from '@/components/PostCardList'
 import { getAllPosts } from '@/services/blog'
 import React from 'react'
 

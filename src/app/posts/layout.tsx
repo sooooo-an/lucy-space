@@ -1,8 +1,7 @@
 import React from 'react'
 import { Metadata } from 'next'
-import Categories from '@/components/posts/Categories'
-import { CategoryData } from '@/types/post'
 import { getCategoryData } from '@/services/blog'
+import PostLayout from '@/layouts/PostLayout'
 
 export const metadata: Metadata = {
   title: {
@@ -11,24 +10,15 @@ export const metadata: Metadata = {
   },
   description: 'Lucy.Space. 개발 블로그',
   icons: {
-    icon: '/favicon.ico',
+    icon: '../data/favicon.ico',
   },
 }
 
-const ALL_POSTS: CategoryData = {
-  All: [{ title: '전체 게시물', path: '/' }],
-}
-
-export default async function PostLayout({
+export default async function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   const categories = await getCategoryData()
-  return (
-    <>
-      <Categories categories={{ ...ALL_POSTS, ...categories }} />
-      <section className="block w-full p-2">{children}</section>
-    </>
-  )
+  return <PostLayout categories={categories}>{children}</PostLayout>
 }

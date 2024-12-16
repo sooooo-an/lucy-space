@@ -7,7 +7,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import Image from 'next/image'
 import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import rehypeRaw from 'rehype-raw'
-import '../../styles/github-markdown.css'
+import '../styles/github-markdown.css'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
@@ -48,6 +48,7 @@ export default function MarkdownViewer({ content, className = '' }: Props) {
             if (isVideo) {
               return (
                 <video controls>
+                  <track kind="captions" />
                   <source src={image.src || ''} type="video/mp4" />
                 </video>
               )

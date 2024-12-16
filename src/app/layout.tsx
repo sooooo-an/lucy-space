@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import '../styles/globals.css'
 import localFont from 'next/font/local'
-import Header from '@/components/common/Header'
+import Header from '@/components/Header'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 }
 
 const pretendard = localFont({
-  src: './fonts/PretendardVariable.woff2',
+  src: '../../data/fonts/PretendardVariable.woff2',
   display: 'swap',
   weight: '45 920',
 })

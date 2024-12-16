@@ -1,5 +1,5 @@
-import PostContent from '@/components/posts/PostContent'
-import PostRightPanel from '@/components/posts/PostRightPanel'
+import PostContent from '@/components/PostContent'
+import PostDetailLayout from '@/layouts/PostDetailLayout'
 import { getAllPosts, getPostData } from '@/services/blog'
 import { Metadata } from 'next'
 import Image from 'next/image'
@@ -25,7 +25,7 @@ export default async function PostPage({ params: { path } }: Props) {
   const { thumbnail, title, contact } = post
 
   return (
-    <div className="flex">
+    <PostDetailLayout postContact={contact} postCreated={post.date}>
       <article className="block w-full">
         <Image
           className="h-auto max-h-[600px] rounded-lg"
@@ -33,13 +33,11 @@ export default async function PostPage({ params: { path } }: Props) {
           alt={title}
           width={960}
           height={540}
+          priority
         />
         <PostContent post={post} />
       </article>
-      <aside className="hidden w-1/4 flex-shrink-0 xl:block">
-        <PostRightPanel contact={contact} date={post.date} />
-      </aside>
-    </div>
+    </PostDetailLayout>
   )
 }
 

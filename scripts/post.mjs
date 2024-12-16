@@ -66,12 +66,12 @@ const processMarkdownFiles = (markdownFiles, jsonOutputPath) => {
 }
 
 const convertMarkdownToJSON = () => {
-  const markdownPath = path.join(process.cwd(), 'blog', 'posts')
+  const markdownPath = path.join(process.cwd(), 'data', 'blog')
   const markdownFiles = readdirSync(markdownPath)
     .filter((file) => file.endsWith('.md') || file.endsWith('.mdx'))
     .map((file) => path.join(markdownPath, file))
 
-  const jsonOutputPath = path.join(process.cwd(), 'blog', 'posts.json')
+  const jsonOutputPath = path.join(process.cwd(), 'data', 'blog', 'posts.json')
   processMarkdownFiles(markdownFiles, jsonOutputPath)
 }
 

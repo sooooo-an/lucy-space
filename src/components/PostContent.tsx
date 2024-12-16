@@ -1,6 +1,6 @@
 import React from 'react'
 import { PostData } from '@/types/post'
-import MarkdownViewer from '../common/MarkdownViewer'
+import MarkdownViewer from './MarkdownViewer'
 
 type Props = {
   post: PostData
