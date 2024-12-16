@@ -3,6 +3,7 @@ import '../styles/globals.css'
 import localFont from 'next/font/local'
 import Header from '@/components/Header'
 import { ThemeProvider } from '@/contexts/ThemeContext'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 export const metadata: Metadata = {
   title: 'Lucy.Space.',
@@ -30,6 +31,7 @@ export default function RootLayout({
           <div className="container flex">{children}</div>
         </main>
       </body>
+      <GoogleAnalytics gaId={process.env.FIREBASE_MEASUREMENT_ID!} />
     </html>
   )
 }
