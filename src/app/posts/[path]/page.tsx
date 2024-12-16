@@ -26,7 +26,7 @@ export default async function PostPage({ params: { path } }: Props) {
 
   return (
     <PostDetailLayout postContact={contact} postCreated={post.date}>
-      <article className="block w-full">
+      <article className="block w-full pb-10">
         <Image
           className="h-auto max-h-[600px] rounded-lg"
           src={`/images/posts/${thumbnail}`}

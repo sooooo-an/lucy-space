@@ -32,9 +32,9 @@ export default function MobileCategories({ categories }: Props) {
       tabIndex={0}
       onClick={clickBackdrop}
       onKeyDown={pressEscapeKey}
-      className={`z-3 fixed h-full w-full ${BACKDROP_STYLE} ${isFolded ? '-left-[250px] before:hidden' : 'left-0 before:block'} transition-all`}
+      className={`z-3 fixed ${BACKDROP_STYLE} ${isFolded ? '-left-[250px] before:hidden' : 'left-0 before:block'} transition-all`}
     >
-      <ul className="z-4 relative h-full w-[250px] border-r border-r-border bg-background p-4">
+      <ul className="z-4 relative h-dvh w-[250px] border-r border-r-border bg-background p-4">
         {Object.keys(categories).map((category) => (
           <CategoryItem categories={categories} category={category} key={category} />
         ))}

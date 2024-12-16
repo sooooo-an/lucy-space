@@ -2,8 +2,8 @@
 
 import { useTheme } from '@/contexts/ThemeContext'
 import React from 'react'
-import ThemeIcon from './icons/ThemeIcon'
 import IconButton from './IconButton'
+import ThemeIcon from './icons/ThemeIcon'
 
 export default function ThemeButton() {
   const { isDark, toggleTheme } = useTheme()
