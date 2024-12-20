@@ -4,6 +4,7 @@ import localFont from 'next/font/local'
 import Header from '@/components/Header'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import { GoogleAnalytics } from '@next/third-parties/google'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 export const metadata: Metadata = {
   title: 'Lucy.Space.',
@@ -33,6 +34,7 @@ export default function RootLayout({
         <main className="flex items-center justify-center">
           <div className="container flex">{children}</div>
         </main>
+        <SpeedInsights />
       </body>
       <GoogleAnalytics gaId={process.env.FIREBASE_MEASUREMENT_ID!} />
     </html>
