@@ -3,7 +3,7 @@ import '../styles/globals.css'
 import localFont from 'next/font/local'
 import Header from '@/components/Header'
 import { ThemeProvider } from '@/contexts/ThemeContext'
-import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
 export const metadata: Metadata = {
@@ -27,6 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${pretendard.className} lg:text-md text-sm antialiased`}>
+      <GoogleTagManager gtmId={process.env.GOOGLE_TAG_MANAGER_ID!} />
       <body className="bg-background">
         <ThemeProvider>
           <Header />
