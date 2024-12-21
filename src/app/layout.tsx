@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.ico',
   },
+  alternates: {
+    canonical: 'https://lucy-an.space/posts',
+  },
   openGraph: {
     title: '루씨 블로그',
     description: '루씨의 개발 블로그',
