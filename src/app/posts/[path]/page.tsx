@@ -40,10 +40,3 @@ export default async function PostPage({ params: { path } }: Props) {
     </PostDetailLayout>
   )
 }
-
-export async function generateStaticParams() {
-  const posts = await getAllPosts()
-  return posts.map((post) => ({
-    slug: post.path,
-  }))
-}
