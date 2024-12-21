@@ -3,14 +3,6 @@ import { Metadata } from 'next'
 import { getCategoryData } from '@/services/blog'
 import PostLayout from '@/layouts/PostLayout'
 
-export const metadata: Metadata = {
-  title: {
-    default: 'Lucy.Space.',
-    template: 'Lucy.Space. | %s',
-  },
-  description: 'Lucy.Space. 개발 블로그',
-}
-
 export default async function Layout({
   children,
 }: Readonly<{

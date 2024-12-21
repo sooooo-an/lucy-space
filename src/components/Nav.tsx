@@ -5,6 +5,7 @@ import NavMenu from './NavMenu'
 import MobileNavButton from './MobileNavButton'
 import GithubButton from './GithubButton'
 import ThemeButton from './ThemeButton'
+import { ThemeProvider } from '@/contexts/ThemeContext'
 
 export default function Nav() {
   const [isOpen, setIsOpen] = useState(false)
@@ -21,7 +22,9 @@ export default function Nav() {
         <NavMenu />
         <div className="block items-center gap-4 md:flex">
           <GithubButton />
-          <ThemeButton />
+          <ThemeProvider>
+            <ThemeButton />
+          </ThemeProvider>
         </div>
       </nav>
       <MobileNavButton onToggle={onToggle} isOpen={isOpen} />

@@ -14,7 +14,7 @@ type Props = {
 export async function generateMetadata({ params: { path } }: Props): Promise<Metadata> {
   const { title, description, category: keywords } = await getPostData(path)
   return {
-    title,
+    title: `루씨 블로그 | ${title}`,
     description,
     keywords,
   }
