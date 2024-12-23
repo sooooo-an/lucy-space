@@ -9,7 +9,7 @@ export default function NavMenu() {
   const pathname = usePathname()
 
   return (
-    <ul className={`relative gap-4 py-2 text-center md:py-0 md:pl-3 ${LEFT_LINE_STYLE}`}>
+    <ul className={`relative gap-4 py-2 text-center md:flex md:py-0 md:pl-3 ${LEFT_LINE_STYLE}`}>
       {NAV_MENU.map(({ href, name }) => (
         <li key={href}>
           <Link

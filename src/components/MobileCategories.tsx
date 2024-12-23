@@ -1,15 +1,17 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CategoryData } from '@/types/post'
 import CategoryItem from './CategoryItem'
 import FoldIcon from './icons/FoldIcon'
+import { usePathname } from 'next/navigation'
 
 type Props = {
   categories: CategoryData
 }
 
 export default function MobileCategories({ categories }: Props) {
+  const pathname = usePathname()
   const [isFolded, setIsOpen] = useState(true)
 
   const toggleFold = () => setIsOpen(!isFolded)
@@ -26,21 +28,25 @@ export default function MobileCategories({ categories }: Props) {
     }
   }
 
+  useEffect(() => {
+    setIsOpen(true)
+  }, [pathname])
+
   return (
     <div
       role="button"
       tabIndex={0}
       onClick={clickBackdrop}
       onKeyDown={pressEscapeKey}
-      className={`z-3 fixed ${BACKDROP_STYLE} ${isFolded ? '-left-[250px] before:hidden' : 'left-0 before:block'} transition-all`}
+      className={`z-3 fixed ${BACKDROP_STYLE} ${isFolded ? '-left-[280px] before:hidden' : 'left-0 before:block'} transition-all`}
     >
-      <ul className="z-4 relative h-dvh w-[250px] border-r border-r-border bg-background p-4">
+      <ul className="z-4 relative h-dvh w-[280px] border-r border-r-border bg-background p-4">
         {Object.keys(categories).map((category) => (
           <CategoryItem categories={categories} category={category} key={category} />
         ))}
       </ul>
       <button
-        className="absolute left-[250px] top-1/2 flex h-20 w-6 -translate-y-1/2 items-center justify-center rounded-br-2xl rounded-tr-2xl bg-text-secondary/90 text-white outline-none"
+        className="absolute left-[280px] top-1/2 flex h-20 w-6 -translate-y-1/2 items-center justify-center rounded-br-2xl rounded-tr-2xl bg-text-secondary/90 text-white outline-none"
         onClick={toggleFold}
       >
         <FoldIcon isFolded={isFolded} />

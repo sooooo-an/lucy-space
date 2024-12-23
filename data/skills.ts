@@ -1,0 +1,15 @@
+export const SKILLS = [
+  'Angular',
+  'RxJS',
+  'Next.js',
+  'React',
+  'TypeScript',
+  'JavaScript',
+  'HTML',
+  'CSS',
+  'Git',
+  'CI/CD (GitHub Actions)',
+  'Socket.io',
+  'Electron.js',
+  'AWS',
+]

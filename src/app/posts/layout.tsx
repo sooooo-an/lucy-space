@@ -1,5 +1,4 @@
 import React from 'react'
-import { Metadata } from 'next'
 import { getCategoryData } from '@/services/blog'
 import PostLayout from '@/layouts/PostLayout'
 

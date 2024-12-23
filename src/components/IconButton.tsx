@@ -4,10 +4,6 @@ import React from 'react'
 
 type Props = IconButtonType
 
-const STYLE = `flex items-center justify-center gap-2`
-const BUTTON_STYLE =
-  'bg-gray-300 rounded-full w-6 h-6 text-gray-800 text-lg flex items-center justify-center'
-
 export default function IconButton(props: Props) {
   const { type, icon, text = '' } = props
 
@@ -30,3 +26,7 @@ export default function IconButton(props: Props) {
       return null
   }
 }
+
+const STYLE = `flex items-center justify-center gap-2`
+const BUTTON_STYLE =
+  'bg-gray-300 rounded-full w-8 h-8 text-gray-800 text-xl flex items-center justify-center hover:brightness-90 transition'

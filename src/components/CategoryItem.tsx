@@ -13,15 +13,20 @@ type Props = {
 export default function CategoryItem({ category, categories }: Props) {
   const pathname = usePathname()
   return (
-    <li key={category} className="mb-4 text-sm font-semibold text-text-primary">
-      <p className="pb-1">{category}</p>
+    <li key={category} className="mb-7 font-semibold text-text-primary">
+      <p className="flex items-center gap-1 pb-2">
+        {category}
+        <span>({categories[category].length})</span>
+      </p>
       <ul>
         {categories[category].map(({ path, title }) => (
-          <li key={path} className="pb-1">
+          <li key={path} className="pb-1 text-sm">
             <Link
               href={`/posts/${path}`}
-              className={`block truncate text-sm font-normal text-text-secondary hover:text-text-primary ${
-                pathname === `/posts/${path}` ? 'font-semibold' : ''
+              className={`block truncate transition-all hover:text-primary ${
+                pathname === `/posts/${path}`
+                  ? 'font-bold text-primary'
+                  : 'font-normal text-text-primary'
               }`}
             >
               {title}
