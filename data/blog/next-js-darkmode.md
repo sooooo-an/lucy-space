@@ -1,6 +1,6 @@
 ---
 title: Next.js와 React의 렌더링 차이 - 다크 모드 구현을 통해 살펴보기
-date: 2024-01-02
+date: 2025-01-02
 category: Next.js
 thumbnail: implementing-dark-mode.png
 ---
