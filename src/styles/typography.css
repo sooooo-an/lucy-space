@@ -24,7 +24,7 @@
   @apply text-primary;
 }
 .prose a:hover {
-  @apply text-success;
+  @apply underline;
 }
 
 .prose p {
@@ -48,7 +48,7 @@
 }
 
 .prose code {
-  @apply rounded bg-background px-2 py-1 text-primary;
+  @apply rounded bg-gray-300 px-1 py-1 text-text-primary;
 }
 
 .prose code::before,
