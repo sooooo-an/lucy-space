@@ -6,7 +6,6 @@ export default function AsideViewer(
   props: React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>
 ) {
   const { children } = props
-  console.log(children)
   return (
     <aside className="bg-info-light text-info-dark flex gap-4 rounded-md border-2 border-info p-4">
       <span className="mt-1 text-info">
