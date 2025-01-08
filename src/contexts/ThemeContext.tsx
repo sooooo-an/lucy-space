@@ -1,64 +1,68 @@
 'use client'
 
-import useLocalStorage from '@/hooks/useLocalStorage'
-import { LOCAL_STORAGE_KEY } from '@/types/localStorage'
-import React, { createContext, useCallback, useEffect, useState } from 'react'
+import { THEME, Theme, ThemeProviderProps, UseThemeProps } from '@/types/theme'
+import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 
-type ThemeProviderType = {
-  isDark: boolean
-  toggleTheme: () => void
-}
+const ThemeContext = createContext<UseThemeProps | undefined>(undefined)
+const defaultContext = { toggleTheme: () => {}, theme: THEME.LIGHT }
 
-const ThemeContext = createContext<ThemeProviderType>({
-  isDark: false,
-  toggleTheme: () => {},
-})
+export const ThemeProvider = ({ children }: ThemeProviderProps) => {
+  const [theme, setThemeState] = useState<Theme>(THEME.LIGHT)
 
-type Props = {
-  children: React.ReactNode
-}
-
-export function ThemeProvider({ children }: Props) {
-  const { getLocalStorage, setLocalStorage } = useLocalStorage()
-  const [isDark, setDark] = useState(false)
-
-  const updateDarMode = useCallback(
-    (isDark: boolean) => {
-      const htmlEl = document.querySelector('html')
-      htmlEl?.classList.toggle('dark', isDark)
-      setLocalStorage(LOCAL_STORAGE_KEY.IS_DARK, isDark)
-    },
-    [setLocalStorage]
-  )
+  const setTheme = useCallback((theme: Theme) => {
+    setThemeState(theme)
+    localStorage.setItem('theme', theme)
+    document.documentElement.classList.toggle('dark', theme === 'dark')
+    document.documentElement.style.colorScheme = theme
+  }, [])
 
   useEffect(() => {
-    const osTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
-    const isDark = getLocalStorage(LOCAL_STORAGE_KEY.IS_DARK) ?? osTheme
-    setDark(isDark)
-    updateDarMode(isDark)
-  }, [getLocalStorage, updateDarMode])
+    const storedTheme =
+      (localStorage.getItem('theme') as Theme) ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? THEME.DARK : THEME.LIGHT)
+    setTheme(storedTheme)
+  }, [setTheme])
 
   const toggleTheme = () => {
-    setDark((prev) => !prev)
-    updateDarMode(!isDark)
+    setTheme(theme === THEME.DARK ? THEME.LIGHT : THEME.DARK)
   }
 
   return (
     <ThemeContext.Provider
       value={{
-        isDark,
+        theme,
         toggleTheme,
       }}
     >
+      <ThemeScript defaultTheme={theme} />
       {children}
     </ThemeContext.Provider>
   )
 }
 
-export const useTheme = () => {
-  const context = React.useContext(ThemeContext)
-  if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider')
+export const useTheme = () => useContext(ThemeContext) ?? defaultContext
+
+const ThemeScript = ({ defaultTheme }: { defaultTheme: Theme }) => {
+  const scriptArgs = JSON.stringify([defaultTheme]).slice(1, -1)
+
+  return (
+    <script
+      suppressHydrationWarning
+      dangerouslySetInnerHTML={{
+        __html: `(${script.toString()})(${scriptArgs})`,
+      }}
+    />
+  )
+}
+
+const script = (defaultTheme: string) => {
+  let theme
+  try {
+    theme = localStorage.getItem('theme') || defaultTheme
+  } catch (e) {
+    theme = defaultTheme
   }
-  return context
+
+  document.documentElement.style.colorScheme = theme
+  document.documentElement.classList.toggle('dark', theme === 'dark')
 }

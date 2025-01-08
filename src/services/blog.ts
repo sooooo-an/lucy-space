@@ -1,5 +1,5 @@
 import { Post, PostData, CategoryData } from '@/types/post'
-import { readFile } from 'fs/promises'
+import { readFile, readdir } from 'fs/promises'
 import path from 'path'
 
 const FRONT_MATTER_REGEX = /^---\n([\s\S]+?)\n---/

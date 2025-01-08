@@ -4,6 +4,7 @@ import Header from '@/components/Header'
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { METADATA } from '@/utils/metadata'
+import { ThemeProvider } from '@/contexts/ThemeContext'
 
 export const metadata = METADATA
 
@@ -13,13 +14,19 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${pretendard.className} text-text-primary antialiased`}>
+    <html
+      lang="en"
+      className={`${pretendard.className} text-text-primary antialiased`}
+      suppressHydrationWarning
+    >
       <GoogleTagManager gtmId={process.env.GOOGLE_TAG_MANAGER_ID!} />
       <body className="bg-background">
-        <Header />
-        <main className="flex h-full min-h-0 flex-col items-center">
-          <div className="container flex flex-1">{children}</div>
-        </main>
+        <ThemeProvider>
+          <Header />
+          <main className="flex h-full min-h-0 flex-col items-center">
+            <div className="container flex flex-1">{children}</div>
+          </main>
+        </ThemeProvider>
         <SpeedInsights />
       </body>
       <GoogleAnalytics gaId={process.env.FIREBASE_MEASUREMENT_ID!} />

@@ -14,7 +14,7 @@ type Props = {
 export async function generateMetadata({ params: { path } }: Props): Promise<Metadata> {
   const { title, description, category: keywords } = await getPostData(path)
   return {
-    title: `루씨 블로그 | ${title}`,
+    title: `Lucy.Space. | ${title}`,
     description,
     keywords,
   }
@@ -26,9 +26,10 @@ export default async function PostPage({ params: { path } }: Props) {
 
   return (
     <PostDetailLayout postContact={contact} postCreated={post.date}>
-      <article className="block w-full pb-10">
+      <article className="block w-full md:p-12">
+        <h2 className="pb-10 text-5xl font-bold leading-tight">{title}</h2>
         <Image
-          className="h-auto max-h-[600px] rounded-lg"
+          className="mb-10 h-auto max-h-[600px] rounded-lg"
           src={`/images/posts/${thumbnail}`}
           alt={title}
           width={960}
@@ -39,4 +40,8 @@ export default async function PostPage({ params: { path } }: Props) {
       </article>
     </PostDetailLayout>
   )
+}
+export async function generateStaticParams() {
+  const posts = await getAllPosts()
+  return posts.map(({ path }) => ({ path }))
 }

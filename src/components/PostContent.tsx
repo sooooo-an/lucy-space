@@ -7,11 +7,6 @@ type Props = {
 }
 
 export default function PostContent({ post }: Props) {
-  const { title, content } = post
-  return (
-    <>
-      <h1 className="py-7 text-4xl font-bold text-text-primary">{title}</h1>
-      <MarkdownViewer content={content} />
-    </>
-  )
+  const { content } = post
+  return <MarkdownViewer content={content} />
 }

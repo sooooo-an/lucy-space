@@ -38,3 +38,25 @@ body {
     --color-border: 60 72 88;
   }
 }
+
+.contact a {
+  display: block;
+  text-decoration: none;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.contact a.active {
+  color: var(--color-primary);
+}
+
+.contact ul {
+  list-style: none;
+  padding-left: 0.8rem;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.contact > ul {
+  padding-left: 0;
+}
