@@ -1,6 +1,6 @@
 ---
 title: 브라우저 렌더링 비교
-date: 2024-11-20
+date: 2024-12-30
 category: Web
 thumbnail: rendering.webp
 ---
