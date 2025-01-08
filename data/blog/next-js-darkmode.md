@@ -105,9 +105,8 @@ export const DarkModeProvider = ({ children }: { children: React.ReactNode }) =>
 브라우저 성능 탭과 네트워크 탭을 확인하면, 서버에서 생성한 HTML을 보내고, 브라우저는 그 HTML을 파싱한 뒤, 스타일 파일을 전부 받은 뒤, 레이아웃작업을 거칩니다. Load 작업이 완료된 뒤에 `DarkModeProvider.useLayoutEffect` 함수호출을 통해 레이아웃이 다시 한 번 변경되면서 다크모드로 스타일이 전환되는 것을 볼 수 있습니다.
 
 <aside>
-💡
 
-[https://github.com/reactwg/server-components/discussions/4](https://github.com/reactwg/server-components/discussions/4)
+<a href='https://github.com/reactwg/server-components/discussions/4' target='_blank'>Next.js 클라이언트 렌더링 </a>
 
 </aside>
 

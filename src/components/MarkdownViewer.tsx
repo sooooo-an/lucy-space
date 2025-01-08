@@ -10,6 +10,7 @@ import rehypeCodeTitles from 'rehype-code-titles'
 import CodeViewer from './markdown/CodeViewer'
 import ImageViewer from './markdown/ImageViewer'
 import '@/styles/typography.css'
+import AsideViewer from './markdown/AsideViewer'
 
 type Props = {
   content: string
@@ -47,6 +48,7 @@ export default function MarkdownViewer({ content, className }: Props) {
         code: CodeViewer,
         img: ImageViewer,
         pre: ({ children }) => <>{children}</>,
+        aside: AsideViewer,
       }}
     >
       {content}
