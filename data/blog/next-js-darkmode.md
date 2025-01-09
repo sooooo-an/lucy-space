@@ -90,7 +90,7 @@ export const DarkModeProvider = ({ children }: { children: React.ReactNode }) =>
 
 ## 2. Next.js에서 다크 모드 구현: 문제점
 
-그러나 React에서의 `useLayoutEffect` 방식은 Next.js 환경에서 동일한 결과를 얻지 못합니다. 이유는 Next.js의 렌더링 메커니즘이 **SSR(서버 사이드 렌더링)**을 기반으로 하기 때문입니다.
+그러나 React에서의 `useLayoutEffect` 방식은 Next.js 환경에서 동일한 결과를 얻지 못합니다. 이유는 Next.js의 렌더링 메커니즘이 **SSR(서버 사이드 렌더링)** 을 기반으로 하기 때문입니다.
 
 ### 2.1. Next.js의 렌더링 과정
 

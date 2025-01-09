@@ -65,7 +65,7 @@
 }
 
 .prose table {
-  @apply w-full border-collapse overflow-hidden rounded bg-background text-text-primary shadow-lg;
+  @apply w-full border-collapse overflow-hidden rounded bg-background text-sm text-text-primary shadow-lg;
   border: 1px solid var(--color-border);
 }
 
