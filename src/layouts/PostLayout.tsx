@@ -10,14 +10,16 @@ type Props = {
 
 export default function PostLayout({ categories, children }: Props) {
   return (
-    <>
-      <section className="hidden w-1/5 flex-shrink-0 border-r border-r-border bg-transparent lg:block">
-        <Categories categories={categories} />
-      </section>
-      <section className="lg:hidden">
-        <MobileCategories categories={categories} />
-      </section>
-      <section className="block w-full p-2">{children}</section>
-    </>
+    <main className="flex h-full min-h-0 flex-col items-center">
+      <div className="container flex flex-1">
+        <section className="hidden w-1/5 flex-shrink-0 border-r border-r-border bg-transparent lg:block">
+          <Categories categories={categories} />
+        </section>
+        <section className="lg:hidden">
+          <MobileCategories categories={categories} />
+        </section>
+        <section className="block w-full p-2">{children}</section>
+      </div>
+    </main>
   )
 }

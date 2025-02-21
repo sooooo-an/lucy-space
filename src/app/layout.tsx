@@ -23,9 +23,7 @@ export default function RootLayout({
       <body className="bg-background">
         <ThemeProvider>
           <Header />
-          <main className="flex h-full min-h-0 flex-col items-center">
-            <div className="container flex flex-1">{children}</div>
-          </main>
+          {children}
         </ThemeProvider>
         <SpeedInsights />
       </body>

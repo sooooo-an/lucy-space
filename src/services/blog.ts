@@ -12,6 +12,14 @@ export const getAllPosts = async () => {
     .then((posts) => posts.sort((a, b) => (a.date > b.date ? -1 : 1)))
 }
 
+export const getLatestPosts = async () => {
+  const filePath = path.join(process.cwd(), 'data', 'blog', 'posts.json')
+  return readFile(filePath, 'utf-8')
+    .then<Post[]>(JSON.parse)
+    .then((posts) => posts.sort((a, b) => (a.date > b.date ? -1 : 1)))
+    .then((posts) => posts.slice(0, 3))
+}
+
 export const getPostData = async (fileName: string): Promise<PostData> => {
   const filePath = path.join(process.cwd(), 'data', 'blog', `${fileName}.md`)
   const posts = await getAllPosts()

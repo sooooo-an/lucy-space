@@ -24,6 +24,13 @@ body {
     --color-info: 59 130 246;
     --color-text-secondary: 75 85 88;
     --color-border: 200 200 200;
+    --color-prj-mint: 142 235 215;
+    --color-prj-pink: 228 90 198;
+    --color-prj-blue: 66 143 245;
+    --color-section-1: 227 229 250;
+    --color-section-2: 187 191 231;
+    --color-section-3: 227 229 250;
+    --color-footer-bg: 122 125 159;
   }
 
   :root[class~='dark'] {
@@ -36,6 +43,13 @@ body {
     --color-info: 37 99 235;
     --color-text-secondary: 120 130 135;
     --color-border: 60 72 88;
+    --color-prj-mint: 50 160 140;
+    --color-prj-pink: 200 80 160;
+    --color-prj-blue: 60 120 230;
+    --color-section-1: 40 50 70;
+    --color-section-2: 45 55 80;
+    --color-section-3: 50 60 90;
+    --color-footer-bg: 28 35 50;
   }
 }
 
@@ -59,4 +73,34 @@ body {
 
 .contact > ul {
   padding-left: 0;
+}
+
+.typed-out {
+  display: flex;
+  overflow: hidden;
+  border-right: 1px solid #fff;
+  white-space: nowrap;
+  animation:
+    typing 1s steps(20, end) forwards,
+    blink 0.8s infinite;
+  width: 0;
+  text-align: center;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  from {
+    border-color: transparent;
+  }
+  to {
+    border-color: #fff;
+  }
 }
