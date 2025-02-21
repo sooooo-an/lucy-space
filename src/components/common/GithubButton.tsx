@@ -1,6 +1,6 @@
-import IconButton from '@/components/IconButton'
+import IconButton from '@/components/ui/IconButton'
 import React from 'react'
-import GithubIcon from './icons/GithubIcon'
+import GithubIcon from '../icons/GithubIcon'
 
 export default function GithubButton() {
   return (

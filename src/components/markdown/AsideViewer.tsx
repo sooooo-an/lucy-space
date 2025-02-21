@@ -1,6 +1,6 @@
 import React from 'react'
 import { FaCircleInfo } from 'react-icons/fa6'
-import MarkdownViewer from '../MarkdownViewer'
+import MarkdownViewer from '../blog/MarkdownViewer'
 
 export default function AsideViewer(
   props: React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>

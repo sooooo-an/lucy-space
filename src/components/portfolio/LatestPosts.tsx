@@ -1,7 +1,7 @@
 import SectionLayout from '@/layouts/SectionLayout'
 import { getLatestPosts } from '@/services/blog'
 import React from 'react'
-import PostCardList from '../PostCardList'
+import PostCardList from '../blog/PostCardList'
 
 export default async function LatestPosts() {
   const posts = await getLatestPosts()

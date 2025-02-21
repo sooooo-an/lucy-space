@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { CategoryData } from '@/types/post'
 import CategoryItem from './CategoryItem'
-import FoldIcon from './icons/FoldIcon'
+import FoldIcon from '../icons/FoldIcon'
 import { usePathname } from 'next/navigation'
 
 type Props = {

@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import localFont from 'next/font/local'
-import Header from '@/components/Header'
+import Header from '@/components/ui/Header'
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { METADATA } from '@/utils/metadata'

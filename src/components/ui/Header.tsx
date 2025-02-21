@@ -1,6 +1,6 @@
 import React from 'react'
 import Logo from './Logo'
-import Nav from './Nav'
+import Nav from '../common/Nav'
 
 export default function Header() {
   return (

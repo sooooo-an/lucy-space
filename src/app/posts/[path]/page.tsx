@@ -1,4 +1,4 @@
-import PostContent from '@/components/PostContent'
+import PostContent from '@/components/blog/PostContent'
 import PostDetailLayout from '@/layouts/PostDetailLayout'
 import { getAllPosts, getPostData } from '@/services/blog'
 import { Metadata } from 'next'

@@ -1,5 +1,5 @@
-import Categories from '@/components/Categories'
-import MobileCategories from '@/components/MobileCategories'
+import Categories from '@/components/blog/Categories'
+import MobileCategories from '@/components/blog/MobileCategories'
 import { CategoryData } from '@/types/post'
 import React from 'react'
 

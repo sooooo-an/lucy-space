@@ -2,8 +2,8 @@
 
 import { useTheme } from '@/contexts/ThemeContext'
 import React from 'react'
-import IconButton from './IconButton'
-import ThemeIcon from './icons/ThemeIcon'
+import IconButton from '../ui/IconButton'
+import ThemeIcon from '../icons/ThemeIcon'
 import { THEME } from '@/types/theme'
 
 export default function ThemeButton() {

@@ -1,5 +1,5 @@
 import React from 'react'
-import MarkdownViewer from '@/components/MarkdownViewer'
+import MarkdownViewer from '@/components/blog/MarkdownViewer'
 import { parseDate } from '@/utils/date'
 
 type Props = {

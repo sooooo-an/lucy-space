@@ -1,5 +1,5 @@
 import React from 'react'
-import DropdownIcon from './icons/DropdownIcon'
+import DropdownIcon from '../icons/DropdownIcon'
 
 type Props = {
   onToggle: () => void

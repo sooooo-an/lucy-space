@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import NavMenu from './NavMenu'
-import MobileNavButton from './MobileNavButton'
+import MobileNavButton from '../blog/MobileNavButton'
 import GithubButton from './GithubButton'
 import ThemeButton from './ThemeButton'
 

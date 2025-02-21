@@ -7,10 +7,10 @@ import rehypeRaw from 'rehype-raw'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeCodeTitles from 'rehype-code-titles'
-import CodeViewer from './markdown/CodeViewer'
-import ImageViewer from './markdown/ImageViewer'
+import CodeViewer from '../markdown/CodeViewer'
+import ImageViewer from '../markdown/ImageViewer'
 import '@/styles/typography.css'
-import AsideViewer from './markdown/AsideViewer'
+import AsideViewer from '../markdown/AsideViewer'
 
 type Props = {
   content: string
