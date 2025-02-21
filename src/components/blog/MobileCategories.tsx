@@ -38,7 +38,7 @@ export default function MobileCategories({ categories }: Props) {
       tabIndex={0}
       onClick={clickBackdrop}
       onKeyDown={pressEscapeKey}
-      className={`z-3 fixed ${BACKDROP_STYLE} ${isFolded ? '-left-[280px] before:hidden' : 'left-0 before:block'} transition-all`}
+      className={`fixed z-10 ${BACKDROP_STYLE} ${isFolded ? '-left-[280px] before:hidden' : 'left-0 before:block'} transition-all`}
     >
       <ul className="z-4 relative h-dvh w-[280px] border-r border-r-border bg-background p-4">
         {Object.keys(categories).map((category) => (
