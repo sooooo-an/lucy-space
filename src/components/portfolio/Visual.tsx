@@ -11,7 +11,7 @@ export default function Visual() {
   return (
     <section className="relative flex w-full flex-col items-center">
       {app && (
-        <h2 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-9xl">
+        <h2 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl md:text-9xl">
           <span className="typed-out">Hello World!</span>
         </h2>
       )}

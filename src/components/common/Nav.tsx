@@ -5,11 +5,21 @@ import NavMenu from './NavMenu'
 import MobileNavButton from '../blog/MobileNavButton'
 import GithubButton from './GithubButton'
 import ThemeButton from './ThemeButton'
+import { usePathname } from 'next/navigation'
 
 export default function Nav() {
   const [isOpen, setIsOpen] = useState(false)
+  const pathname = usePathname()
 
   const onToggle = () => setIsOpen(!isOpen)
+
+  useEffect(() => {
+    if (!isOpen) {
+      return
+    }
+
+    setIsOpen(false)
+  }, [pathname])
 
   return (
     <>

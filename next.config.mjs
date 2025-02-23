@@ -5,6 +5,9 @@ const nextConfig = {
       {
         hostname: 'res.cloudinary.com',
       },
+      {
+        hostname: 'prod-files-secure.s3.us-west-2.amazonaws.com',
+      },
     ],
   },
 }

@@ -1,20 +1,14 @@
 import SectionLayout from '@/layouts/SectionLayout'
+import { getProject } from '@/services/project'
+import ProjectList from '@/components/projects/ProjectList'
 import React from 'react'
 
-import { PROJECTS } from '@data/project'
+export default async function Projects() {
+  const projects = await getProject(process.env.NOTION_PROJECT_DATABASE_ID!)
 
-import ProjectCard from './ProjectCard'
-
-export default function Projects() {
   return (
     <SectionLayout bgColor="bg-section-2" title="Projects">
-      <ul className="flex flex-wrap items-center justify-center gap-6">
-        {PROJECTS.map((project, idx) => (
-          <ProjectCard key={idx} project={project} isMargin={!!(idx % 2)} color={colors[idx]} />
-        ))}
-      </ul>
+      <ProjectList list={projects} />
     </SectionLayout>
   )
 }
-
-const colors = ['bg-prj-mint', 'bg-prj-pink', 'bg-prj-blue']

@@ -10,11 +10,11 @@ type Props = {
 export default function NotionText({ text, bold }: Props) {
   if (text.link) {
     return (
-      <Link className={`${bold && 'font-bold'}`} href={text.link.url}>
+      <Link className={`${bold ? 'font-bold' : ''} underline`} href={text.link.url}>
         {text.content}
       </Link>
     )
   }
 
-  return <span className={`${bold && 'font-bold'}`}>{text.content}</span>
+  return <span className={`${bold ? 'font-bold' : ''}`}>{text.content}</span>
 }
