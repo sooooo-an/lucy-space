@@ -18,7 +18,7 @@ export default function ProjectCardLinks({ github, url }: Props) {
           href={github}
           target="_blank"
           rel="noopener noreferrer"
-          className="p-1"
+          className="transition-color rounded-md p-1 duration-300 ease-in-out hover:bg-black/10"
           onClick={(e) => e.stopPropagation()}
         >
           <GithubIcon />
@@ -29,7 +29,7 @@ export default function ProjectCardLinks({ github, url }: Props) {
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="p-1"
+          className="transition-color rounded-md p-1 duration-300 ease-in-out hover:bg-black/10"
           onClick={(e) => e.stopPropagation()}
         >
           <LinkIcon />

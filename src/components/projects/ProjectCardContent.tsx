@@ -10,7 +10,7 @@ export default function ProjectCardContent({ title, description, github, url }: 
     <div className="relative min-h-[150px] p-2">
       <p className="pb-1 font-semibold">{title && <NotionRichTextArray list={title} />}</p>
       <span className="text-sm">{description && <NotionRichTextArray list={description} />}</span>
-      {!(github || url) && <ProjectCardLinks github={github} url={url} />}
+      {(github || url) && <ProjectCardLinks github={github} url={url} />}
     </div>
   )
 }

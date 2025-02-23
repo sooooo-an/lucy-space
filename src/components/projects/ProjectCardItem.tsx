@@ -14,11 +14,11 @@ type Props = {
 export default function ProjectCardItem({ item }: Props) {
   const { path, github, thumbnail, title, url, description } = item
   return (
-    <Link href={`projects/${path}`}>
-      <div className="rounded-lg border-border bg-prj-blue p-2 shadow-md">
+    <div className="rounded-lg border-border bg-prj-blue p-2 shadow-md">
+      <Link href={`projects/${path}`}>
         <ProjectCardImage thumbnail={thumbnail} />
-        <ProjectCardContent github={github} title={title} url={url} description={description} />
-      </div>
-    </Link>
+      </Link>
+      <ProjectCardContent github={github} title={title} url={url} description={description} />
+    </div>
   )
 }
