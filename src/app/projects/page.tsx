@@ -1,6 +1,7 @@
 import ProjectList from '@/components/projects/ProjectList'
 import { getProject } from '@/services/project'
-import React from 'react'
+
+export const revalidate = 86400
 
 export default async function page() {
   const projects = await getProject(process.env.NOTION_PROJECT_DATABASE_ID!)
