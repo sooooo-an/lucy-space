@@ -99,9 +99,12 @@ const getPage = async (pageId: string) => {
   })
 }
 
-export const getDatabase = (dbId: string, options?: QueryDatabaseParameters) => {
+export const getDatabase = (
+  dbId: string,
+  options?: Omit<QueryDatabaseParameters, 'database_id'>
+) => {
   return notion.databases.query({
     database_id: dbId,
-    sorts: [{ property: 'date', direction: 'descending' }],
+    ...options,
   })
 }

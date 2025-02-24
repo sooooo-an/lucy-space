@@ -4,7 +4,15 @@ import { ProjectType } from '@/types/project'
 
 export const getProject = async (dbId: string): Promise<ProjectType[]> => {
   try {
-    const data = await getDatabase(dbId)
+    const data = await getDatabase(dbId, {
+      sorts: [{ property: 'date', direction: 'descending' }],
+      filter: {
+        property: 'status',
+        select: {
+          equals: 'end',
+        },
+      },
+    })
     return data.results.filter(isPageObjectResponse).map(convertProject)
   } catch (err) {
     console.error(err)
