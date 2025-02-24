@@ -2,7 +2,7 @@ import NotionBlocks from '@/components/notions/NotionBlocks'
 import { getBlocks, getProfile } from '@/services/notion'
 import Image from 'next/image'
 
-import React from 'react'
+export const relative = 60
 
 export default async function AboutPage() {
   const blocksApi = getBlocks(process.env.NOTION_ABOUT_PAGE_ID!, [])
