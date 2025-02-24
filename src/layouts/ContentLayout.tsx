@@ -21,6 +21,7 @@ export default function ContentLayout({ children, cover, title }: Props) {
           width={800}
           height={300}
           className="mb-5 h-40 w-full object-cover shadow-sm md:h-64"
+          priority
         />
       )}
 
