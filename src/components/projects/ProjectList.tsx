@@ -8,8 +8,8 @@ type Props = {
 export default function ProjectList({ list }: Props) {
   return (
     <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {list.map((item) => (
-        <ProjectCardItem item={item} key={item.path} />
+      {list.map((item, idx) => (
+        <ProjectCardItem item={item} key={item.path} priority={idx === list.length - 1} />
       ))}
     </ul>
   )
