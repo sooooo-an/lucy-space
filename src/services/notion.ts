@@ -24,8 +24,8 @@ export const getNotionContents = async (pageId: string): Promise<NotionContentTy
     return {
       blocks,
       title: title?.type === 'title' ? title?.title : [],
-      icon: getThumbnailURL(icon),
-      cover: getThumbnailURL(cover),
+      icon: getIconURL(icon),
+      cover: getCoverURL(cover),
     }
   } catch (err) {
     console.error(err)
@@ -47,7 +47,7 @@ export const getBlocks = async (
   return newResults.filter(isBlockObjectResponse)
 }
 
-const getThumbnailURL = (icon: PageObjectResponse['icon']) => {
+const getIconURL = (icon: PageObjectResponse['icon']) => {
   if (!icon) return ''
 
   let url = ''
