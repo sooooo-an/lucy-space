@@ -40,7 +40,7 @@ export default function ContentLayout({ children, cover, title, icon, isShowBack
               priority
             />
           )}
-          <h3 className="pt-2 text-4xl font-semibold">
+          <h3 className="pt-2 text-2xl font-bold md:text-4xl">
             <NotionRichTextArray list={title} />
           </h3>
         </div>
