@@ -9,9 +9,10 @@ type Props = {
   cover?: string | null
   icon?: string | null
   title: RichTextItemResponse[]
+  isShowBackBtn?: boolean
 }
 
-export default function ContentLayout({ children, cover, title }: Props) {
+export default function ContentLayout({ children, cover, title, icon, isShowBackBtn }: Props) {
   return (
     <main>
       {cover && (
@@ -27,7 +28,18 @@ export default function ContentLayout({ children, cover, title }: Props) {
 
       <div className="container mx-auto px-4 lg:px-0">
         <div>
-          <BackButton />
+          {isShowBackBtn && <BackButton />}
+
+          {icon && (
+            <Image
+              src={icon}
+              alt="icon"
+              width={100}
+              height={100}
+              className="mb-5 mt-10 h-32 w-32 rounded-2xl"
+              priority
+            />
+          )}
           <h3 className="pt-2 text-4xl font-semibold">
             <NotionRichTextArray list={title} />
           </h3>

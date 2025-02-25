@@ -1,4 +1,9 @@
-import { NotionBlockApiType, NotionBlockType, NotionContentType } from '@/types/notion'
+import {
+  NotionBlockApiType,
+  NotionBlockType,
+  NotionContentType,
+  PageResponseType,
+} from '@/types/notion'
 import { Client } from '@notionhq/client'
 import {
   GetPageResponse,
@@ -10,17 +15,18 @@ export const getNotionContents = async (pageId: string): Promise<NotionContentTy
   try {
     const [page, blocks] = await Promise.all([getPage(pageId), getBlocks(pageId, [])])
 
-    if (isPageObjectResponse(page)) {
-      const { icon, properties, cover } = page
-      return {
-        icon: getThumbnailURL(icon),
-        cover: getThumbnailURL(cover),
-        blocks,
-        title: properties.Name.type === 'title' ? properties.Name.title : [],
-      }
+    if (!isPageObjectResponse(page)) {
+      return null
     }
 
-    return null
+    const { icon, properties, cover } = page
+    const title = properties?.Name ? properties?.Name : properties?.title
+    return {
+      blocks,
+      title: title?.type === 'title' ? title?.title : [],
+      icon: getThumbnailURL(icon),
+      cover: getThumbnailURL(cover),
+    }
   } catch (err) {
     console.error(err)
     throw new Error('노션 페이지를 불러오는데 에러가 발생했습니다')
@@ -32,47 +38,53 @@ export const getBlocks = async (
   results: NotionBlockApiType[],
   cursor?: string
 ): Promise<NotionBlockType[]> => {
-  try {
-    const data = await getPageBlocks(pageId, cursor)
-    const newResults = [...results, ...data.results]
-    if (data.next_cursor) {
-      return getBlocks(pageId, newResults, data.next_cursor)
-    }
-
-    return newResults.filter(isBlockObjectResponse)
-  } catch {
-    throw new Error('노션 블록을 불러오는데 에러가 발생했습니다')
+  const data = await getPageBlocks(pageId, cursor)
+  const newResults = [...results, ...data.results]
+  if (data.next_cursor) {
+    return getBlocks(pageId, newResults, data.next_cursor)
   }
-}
 
-export const getProfile = async (pageId: string) => {
-  try {
-    const data = await getPage(pageId)
-
-    if (isPageObjectResponse(data)) {
-      const { icon, properties } = data
-      return {
-        thumbnail: getThumbnailURL(icon),
-      }
-    }
-  } catch {
-    throw new Error('노션 페이지를 불러오는데 에러가 발생했습니다')
-  }
+  return newResults.filter(isBlockObjectResponse)
 }
 
 const getThumbnailURL = (icon: PageObjectResponse['icon']) => {
-  switch (icon?.type) {
+  if (!icon) return ''
+
+  let url = ''
+
+  switch (icon.type) {
     case 'file':
-      return icon.file.url
+      url = icon.file.url
+      break
     case 'custom_emoji':
-      return icon.custom_emoji.url
+      url = icon.custom_emoji.url
+      break
     case 'emoji':
-      return icon.emoji
+      url = icon.emoji
+      break
     case 'external':
-      return icon.external.url
-    default:
-      return null
+      url = icon.external.url
+      break
   }
+
+  return url ? `/api/image-proxy?url=${encodeURIComponent(url)}` : ''
+}
+
+export const getCoverURL = (cover: PageResponseType['cover']) => {
+  if (!cover) return ''
+
+  let url = ''
+
+  switch (cover.type) {
+    case 'file':
+      url = cover.file.url
+      break
+    case 'external':
+      url = cover.external.url
+      break
+  }
+
+  return url ? `/api/image-proxy?url=${encodeURIComponent(url)}` : ''
 }
 
 const notion = new Client({ auth: process.env.NOTION_SECRET })

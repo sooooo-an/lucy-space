@@ -1,26 +1,22 @@
 import NotionBlocks from '@/components/notions/NotionBlocks'
-import { getBlocks, getProfile } from '@/services/notion'
-import Image from 'next/image'
+import { getNotionContents } from '@/services/notion'
+import NotFound from '../not-found'
+import ContentLayout from '@/layouts/ContentLayout'
 
-export const revalidate = 86400
+export const revalidate = 3600
 
 export default async function AboutPage() {
-  const blocksApi = getBlocks(process.env.NOTION_ABOUT_PAGE_ID!, [])
-  const profileApi = getProfile(process.env.NOTION_ABOUT_PAGE_ID!)
-  const [blocks, profile] = await Promise.all([blocksApi, profileApi])
+  const data = await getNotionContents(process.env.NOTION_ABOUT_PAGE_ID!)
+
+  if (!data) {
+    return NotFound()
+  }
+
+  const { blocks, title, icon, cover } = data
 
   return (
-    <main className="mx-auto max-w-[710px] px-4 lg:px-0">
-      <Image
-        src={profile?.thumbnail ?? ''}
-        alt="profile thumbnail"
-        width={100}
-        height={100}
-        className="mb-5 mt-10 h-32 w-32 rounded-2xl"
-        priority
-      />
-      <h2 className="text-2xl font-bold">안수경 | 프론트엔드 개발자</h2>
+    <ContentLayout cover={cover} icon={icon} title={title}>
       <NotionBlocks blocks={blocks} />
-    </main>
+    </ContentLayout>
   )
 }

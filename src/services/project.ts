@@ -1,5 +1,5 @@
 import { DatabasePageResponseType, PageResponseType } from '@/types/notion'
-import { getBlocks, getDatabase } from './notion'
+import { getBlocks, getCoverURL, getDatabase } from './notion'
 import { ProjectType } from '@/types/project'
 
 export const getProject = async (dbId: string): Promise<ProjectType[]> => {
@@ -52,17 +52,6 @@ const convertProject = (res: PageResponseType): ProjectType => {
     url: getProperty('url', 'url', ''),
     title: getProperty('Name', 'title', []),
     description: getProperty('description', 'rich_text', []),
-  }
-}
-
-const getCoverURL = (cover: PageResponseType['cover']) => {
-  switch (cover?.type) {
-    case 'external':
-      return cover.external.url
-    case 'file':
-      return cover.file.url
-    default:
-      return ''
   }
 }
 

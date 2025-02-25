@@ -1,14 +1,10 @@
 import ProjectList from '@/components/projects/ProjectList'
 import { getProject } from '@/services/project'
 
-export const revalidate = 86400
+export const revalidate = 3600
 
 export default async function page() {
-  const projects = await getProject(process.env.NOTION_PROJECT_DATABASE_ID!)
-  const list = projects.map((item) => ({
-    ...item,
-    thumbnail: `/api/image-proxy?url=${encodeURIComponent(item.thumbnail)}`,
-  }))
+  const list = await getProject(process.env.NOTION_PROJECT_DATABASE_ID!)
 
   return (
     <main className="pt-5">

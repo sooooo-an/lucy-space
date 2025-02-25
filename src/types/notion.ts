@@ -20,8 +20,8 @@ export type DatabasePageResponseType =
 export type PageResponseType = PageObjectResponse
 
 export type NotionContentType = {
-  icon: string | null
-  cover: string | null
+  icon?: string
+  cover?: string
   blocks: NotionBlockType[]
   title: RichTextItemResponse[]
 }
