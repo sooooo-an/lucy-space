@@ -2,7 +2,6 @@
 const nextConfig = {
   images: {
     formats: ['image/webp'],
-    deviceSizes: [320, 420, 768, 1024, 1200],
     remotePatterns: [
       {
         hostname: 'res.cloudinary.com',

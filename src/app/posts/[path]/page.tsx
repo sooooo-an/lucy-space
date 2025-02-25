@@ -11,15 +11,6 @@ type Props = {
   }
 }
 
-export async function generateMetadata({ params: { path } }: Props): Promise<Metadata> {
-  const { title, description, category: keywords } = await getPostData(path)
-  return {
-    title: `Lucy.Space. | ${title}`,
-    description,
-    keywords,
-  }
-}
-
 export default async function PostPage({ params: { path } }: Props) {
   const post = await getPostData(path)
   const { thumbnail, title, contact } = post
@@ -44,4 +35,44 @@ export default async function PostPage({ params: { path } }: Props) {
 export async function generateStaticParams() {
   const posts = await getAllPosts()
   return posts.map(({ path }) => ({ path }))
+}
+
+export async function generateMetadata({ params: { path } }: Props): Promise<Metadata> {
+  const post = await getPostData(path)
+
+  const { title, description, category: keywords, thumbnail } = await getPostData(path)
+  const pageTitle = `${title} | Lucy.Space`
+  const pageImage = thumbnail ?? '/images/logo.png'
+  const pageUrl = `https://lucy-an.space/posts/${path}`
+
+  return {
+    title: pageTitle,
+    description,
+    keywords,
+    icons: {
+      icon: '/favicon.ico',
+    },
+    openGraph: {
+      title: pageTitle,
+      description,
+      type: 'article',
+      locale: 'ko_KR',
+      url: pageUrl,
+      siteName: 'Lucy.Space',
+      images: [
+        {
+          url: pageImage,
+          width: 1200,
+          height: 630,
+          alt: pageTitle,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: pageTitle,
+      description,
+      images: [pageImage],
+    },
+  }
 }
