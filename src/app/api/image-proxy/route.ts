@@ -10,6 +10,11 @@ export async function GET(req: NextRequest) {
   }
 
   try {
+    const acceptHeader = req.headers.get('accept') || ''
+    const isWebPSupported = acceptHeader.includes('image/webp')
+
+    const transformedUrl = isWebPSupported ? `${imageUrl}&format=webp` : imageUrl
+
     const response = await fetch(imageUrl, {
       headers: { 'User-Agent': 'Mozilla/5.0 (compatible; ImageProxy/1.0)' },
     })
@@ -23,6 +28,8 @@ export async function GET(req: NextRequest) {
     const headers = new Headers(response.headers)
     headers.set('Cache-Control', 'public, s-maxage=86400, stale-while-revalidate=43200')
     headers.set('CDN-Cache-Control', 'public, s-maxage=86400, stale-while-revalidate=43200')
+    headers.set('Content-Encoding', 'gzip')
+    headers.set('Content-Type', 'image/webp')
 
     return new NextResponse(buffer, {
       status: response.status,
