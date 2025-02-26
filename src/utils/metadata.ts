@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 
 export const METADATA: Metadata = {
+  metadataBase: new URL('https://lucy-an.space'),
   title: '프론트엔드 개발자 포트폴리오 | Lucy Space',
   description: '프론트엔드 개발자 안수경의 포트폴리오입니다.',
   icons: {
