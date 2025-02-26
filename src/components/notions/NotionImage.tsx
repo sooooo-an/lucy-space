@@ -9,10 +9,10 @@ type Props = {
 
 export default function NotionImage({ image }: Props) {
   if (image.type === 'external') {
-    return <Image src={image.external.url} alt={image.external.url} width={800} height={400} />
+    return <img src={image.external.url} alt={image.external.url} width={800} height={400} />
   }
 
   return (
-    <Image src={image.file.url} alt={image.file.url} width={800} height={400} className="w-full" />
+    <img src={image.file.url} alt={image.file.url} width={800} height={400} className="w-full" />
   )
 }

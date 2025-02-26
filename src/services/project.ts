@@ -1,5 +1,5 @@
 import { DatabasePageResponseType, PageResponseType } from '@/types/notion'
-import { getBlocks, getCoverURL, getDatabase } from './notion'
+import { getBlocks, getCoverURL, getDatabase, getOptimizedImage } from './notion'
 import { ProjectType } from '@/types/project'
 
 export const getProject = async (dbId: string): Promise<ProjectType[]> => {
@@ -13,7 +13,11 @@ export const getProject = async (dbId: string): Promise<ProjectType[]> => {
         },
       },
     })
-    return data.results.filter(isPageObjectResponse).map(convertProject)
+    const projects = await Promise.all(
+      data.results.filter(isPageObjectResponse).map(convertProject)
+    )
+
+    return projects
   } catch (err) {
     console.error(err)
     throw new Error('노션 데이터베이스를 불러오는데 에러가 발생했습니다')
@@ -28,8 +32,10 @@ const isPageObjectResponse = (page: DatabasePageResponseType): page is PageRespo
   return 'properties' in page && page.object === 'page'
 }
 
-const convertProject = (res: PageResponseType): ProjectType => {
+const convertProject = async (res: PageResponseType): Promise<ProjectType> => {
   const { id, cover, properties } = res
+
+  const thumbnail = await getOptimizedImage(getCoverURL(cover), `${id}_thumbnail`)
 
   const getProperty = <K extends keyof PageResponseType['properties'], T>(
     key: K,
@@ -47,7 +53,7 @@ const convertProject = (res: PageResponseType): ProjectType => {
 
   return {
     path: id,
-    thumbnail: getCoverURL(cover),
+    thumbnail,
     github: getProperty('github', 'url', ''),
     url: getProperty('url', 'url', ''),
     title: getProperty('Name', 'title', []),

@@ -9,7 +9,9 @@ import {
   GetPageResponse,
   PageObjectResponse,
   QueryDatabaseParameters,
+  RichTextItemResponse,
 } from '@notionhq/client/build/src/api-endpoints'
+import { uploadImage } from './cloudinary'
 
 export const getNotionContents = async (pageId: string): Promise<NotionContentType | null> => {
   try {
@@ -19,18 +21,33 @@ export const getNotionContents = async (pageId: string): Promise<NotionContentTy
       return null
     }
 
-    const { icon, properties, cover } = page
-    const title = properties?.Name ? properties?.Name : properties?.title
+    const title = getTitle(page.properties)
+    const icon = await getOptimizedImage(getIconURL(page.icon), `${pageId}_icon`)
+    const cover = await getOptimizedImage(getCoverURL(page.cover), `${pageId}_cover`)
+
     return {
       blocks,
-      title: title?.type === 'title' ? title?.title : [],
-      icon: getIconURL(icon),
-      cover: getCoverURL(cover),
+      title,
+      icon,
+      cover,
     }
   } catch (err) {
     console.error(err)
     throw new Error('노션 페이지를 불러오는데 에러가 발생했습니다')
   }
+}
+
+const getTitle = (properties: PageObjectResponse['properties']): RichTextItemResponse[] => {
+  const titleProp = properties?.Name || properties?.title
+  return titleProp?.type === 'title' ? titleProp.title : []
+}
+
+export const getOptimizedImage = async (
+  imageUrl: string | null,
+  publicId: string
+): Promise<string | undefined> => {
+  if (!imageUrl) return undefined
+  return await uploadImage(imageUrl, publicId)
 }
 
 export const getBlocks = async (
@@ -48,43 +65,33 @@ export const getBlocks = async (
 }
 
 const getIconURL = (icon: PageObjectResponse['icon']) => {
-  if (!icon) return ''
-
-  let url = ''
+  if (!icon) return null
 
   switch (icon.type) {
     case 'file':
-      url = icon.file.url
-      break
+      return icon.file.url
     case 'custom_emoji':
-      url = icon.custom_emoji.url
-      break
+      return icon.custom_emoji.url
     case 'emoji':
-      url = icon.emoji
-      break
+      return icon.emoji
     case 'external':
-      url = icon.external.url
-      break
+      return icon.external.url
+    default:
+      return null
   }
-
-  return url ? `/api/image-proxy?url=${encodeURIComponent(url)}` : ''
 }
 
 export const getCoverURL = (cover: PageResponseType['cover']) => {
-  if (!cover) return ''
-
-  let url = ''
+  if (!cover) return null
 
   switch (cover.type) {
     case 'file':
-      url = cover.file.url
-      break
+      return cover.file.url
     case 'external':
-      url = cover.external.url
-      break
+      return cover.external.url
+    default:
+      return null
   }
-
-  return url ? `/api/image-proxy?url=${encodeURIComponent(url)}` : ''
 }
 
 const notion = new Client({ auth: process.env.NOTION_SECRET })

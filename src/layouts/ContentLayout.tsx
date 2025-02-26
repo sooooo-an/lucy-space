@@ -30,13 +30,12 @@ export default function ContentLayout({ children, cover, title, icon, isShowBack
           {isShowBackBtn && <BackButton />}
 
           {icon && (
-            <Image
+            <img
               src={icon}
               alt="icon"
               width={100}
               height={100}
               className="mb-5 mt-10 h-32 w-32 rounded-2xl"
-              priority
             />
           )}
           <h3 className="pt-2 text-2xl font-bold md:text-4xl">
