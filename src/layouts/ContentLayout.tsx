@@ -1,8 +1,7 @@
 import BackButton from '@/components/common/BackButton'
+import CldImage from '@/components/common/CldImage'
 import NotionRichTextArray from '@/components/notions/NotionRichTextArray'
 import { RichTextItemResponse } from '@notionhq/client/build/src/api-endpoints'
-import { CldImage } from 'next-cloudinary'
-import Image from 'next/image'
 import React from 'react'
 
 type Props = {

@@ -1,16 +1,19 @@
+import { getCoverURL, getOptimizedImage } from '@/services/notion'
 import { ImageBlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
 import React from 'react'
+import CldImage from '../common/CldImage'
 
 type Props = {
   image: ImageBlockObjectResponse['image']
 }
 
-export default function NotionImage({ image }: Props) {
-  if (image.type === 'external') {
-    return <img src={image.external.url} alt={image.external.url} width={800} height={400} />
+export default async function NotionImage({ image }: Props) {
+  const imageUrl = getCoverURL(image)
+  const url = await getOptimizedImage(imageUrl, image.toString())
+
+  if (!url) {
+    return null
   }
 
-  return (
-    <img src={image.file.url} alt={image.file.url} width={800} height={400} className="w-full" />
-  )
+  return <CldImage src={url} alt={url} width={800} height={400} className="w-full" />
 }

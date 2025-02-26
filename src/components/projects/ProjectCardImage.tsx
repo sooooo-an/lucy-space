@@ -1,5 +1,5 @@
-import { CldImage } from 'next-cloudinary'
 import React from 'react'
+import CldImage from '../common/CldImage'
 
 type Props = {
   thumbnail: string | undefined
