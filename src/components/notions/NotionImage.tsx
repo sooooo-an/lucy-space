@@ -1,6 +1,4 @@
-import { NotionBlockType } from '@/types/notion'
 import { ImageBlockObjectResponse } from '@notionhq/client/build/src/api-endpoints'
-import Image from 'next/image'
 import React from 'react'
 
 type Props = {
