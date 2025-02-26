@@ -1,7 +1,7 @@
 import ProjectList from '@/components/projects/ProjectList'
 import { getProject } from '@/services/project'
 
-export const revalidate = 3600
+export const revalidate = 86400
 
 export default async function page() {
   const list = await getProject(process.env.NOTION_PROJECT_DATABASE_ID!)

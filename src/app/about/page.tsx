@@ -3,7 +3,7 @@ import { getNotionContents } from '@/services/notion'
 import NotFound from '../not-found'
 import ContentLayout from '@/layouts/ContentLayout'
 
-export const revalidate = 3600
+export const revalidate = 86400
 
 export default async function AboutPage() {
   const data = await getNotionContents(process.env.NOTION_ABOUT_PAGE_ID!)

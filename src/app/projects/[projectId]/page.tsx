@@ -4,7 +4,7 @@ import { getNotionContents } from '@/services/notion'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-export const revalidate = 3600
+export const revalidate = 86400
 
 type Props = {
   params: { projectId: string }
