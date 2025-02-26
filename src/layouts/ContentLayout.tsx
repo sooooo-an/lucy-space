@@ -1,6 +1,7 @@
 import BackButton from '@/components/common/BackButton'
 import NotionRichTextArray from '@/components/notions/NotionRichTextArray'
 import { RichTextItemResponse } from '@notionhq/client/build/src/api-endpoints'
+import { CldImage } from 'next-cloudinary'
 import Image from 'next/image'
 import React from 'react'
 
@@ -16,7 +17,7 @@ export default function ContentLayout({ children, cover, title, icon, isShowBack
   return (
     <main>
       {cover && (
-        <img
+        <CldImage
           src={cover}
           alt="cover"
           width={800}
@@ -30,7 +31,7 @@ export default function ContentLayout({ children, cover, title, icon, isShowBack
           {isShowBackBtn && <BackButton />}
 
           {icon && (
-            <img
+            <CldImage
               src={icon}
               alt="icon"
               width={100}

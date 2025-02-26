@@ -1,3 +1,4 @@
+import { CldImage } from 'next-cloudinary'
 import React from 'react'
 
 type Props = {
@@ -8,7 +9,7 @@ export default function ProjectCardImage({ thumbnail }: Props) {
   return (
     <div className="relative overflow-hidden">
       {thumbnail && (
-        <img
+        <CldImage
           src={thumbnail}
           width={250}
           height={200}
