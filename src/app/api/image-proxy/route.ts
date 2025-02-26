@@ -18,10 +18,13 @@ export async function GET(req: NextRequest) {
       throw new Error(`Failed to fetch image: ${response.status}`)
     }
 
-    const headers = new Headers(response.headers)
-    headers.set('Cache-Control', 's-maxage=86400, stale-while-revalidate=43200')
+    const buffer = await response.arrayBuffer()
 
-    return new NextResponse(response.body, {
+    const headers = new Headers(response.headers)
+    headers.set('Cache-Control', 'public, s-maxage=86400, stale-while-revalidate=43200')
+    headers.set('CDN-Cache-Control', 'public, s-maxage=86400, stale-while-revalidate=43200')
+
+    return new NextResponse(buffer, {
       status: response.status,
       headers,
     })
