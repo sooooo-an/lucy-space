@@ -46,6 +46,7 @@ export async function generateMetadata({ params: { path } }: Props): Promise<Met
   const pageUrl = `https://lucy-an.space/posts/${path}`
 
   return {
+    metadataBase: new URL('https://lucy-an.space'),
     title: pageTitle,
     description,
     keywords,

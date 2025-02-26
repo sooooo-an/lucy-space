@@ -45,6 +45,7 @@ export async function generateMetadata({ params: { projectId } }: Props): Promis
   const pageIcon = data?.icon ?? '/favicon.ico'
 
   return {
+    metadataBase: new URL('https://lucy-an.space'),
     title: pageTitle,
     description: `${pageTitle} 프로젝트 상세 정보`,
     icons: {
