@@ -32,7 +32,7 @@ export default function RootLayout({
 }
 
 const pretendard = localFont({
-  src: '../../public/fonts/PretendardVariable.woff2',
+  src: '/fonts/PretendardVariable.woff2',
   display: 'swap',
   weight: '45 920',
 })
