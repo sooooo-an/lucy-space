@@ -8,11 +8,12 @@ export default function AboutMe() {
     <SectionLayout title="About Me" bgColor="bg-section-1">
       <div className="flex flex-col items-center justify-around lg:flex-row-reverse">
         <Image
-          src={'/images/portfolio/about-me.png'}
+          src={'/images/portfolio/about-me.webp'}
           alt="avatar"
           width={400}
           height={400}
           className="h-auto w-auto"
+          priority
         />
         <div className="mt-10 basis-1/2 lg:mt-0">
           <h3 className="pb-4 text-2xl font-semibold">

@@ -11,13 +11,5 @@ type props = {
 }
 
 export default function CldImage(props: props) {
-  return (
-    <CloudinaryImage
-      crop="limit"
-      quality="auto"
-      format="webp"
-      sizes="(max-width: 480px) 480px, (max-width: 800px) 800px, 1200px"
-      {...props}
-    />
-  )
+  return <CloudinaryImage crop="limit" quality="auto" format="webp" {...props} />
 }
