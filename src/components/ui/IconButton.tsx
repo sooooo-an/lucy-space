@@ -10,14 +10,19 @@ export default function IconButton(props: Props) {
   switch (type) {
     case 'button':
       return (
-        <button className={STYLE} onClick={props.onClick}>
+        <button className={STYLE} onClick={props.onClick} aria-label={text}>
           <span className={BUTTON_STYLE}>{icon}</span>
           <span className="text-text-primary md:hidden">{text}</span>
         </button>
       )
     case 'link':
       return (
-        <Link className={STYLE} href={props.link} target={props.isBlank ? '_blank' : '_self'}>
+        <Link
+          className={STYLE}
+          href={props.link}
+          target={props.isBlank ? '_blank' : '_self'}
+          aria-label={text}
+        >
           <span className={BUTTON_STYLE}>{icon}</span>
           <span className="text-text-primary md:hidden">{text}</span>
         </Link>
